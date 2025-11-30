@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2c8850">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>数据筑梦</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/slideshow.css">
+</head>
+<body>
+    <nav class="main-nav">
+        <a href="./index.html" class="nav-brand" aria-label="数据筑梦主页">
+            <img src="image/logo.png" alt="数据筑梦" />
+        </a>
+        <ul>
+            <li><a href="./index.html" class="nav-link">首页</a></li>
+            <li><a href="./www/zhesj.html" class="nav-link">智算能力提升行动</a></li>
+            <li><a href="./www/sjjs.html" class="nav-link">数据资源建设行动</a></li>
+            <li><a href="./www/dmx.html" class="nav-link">行业大模型发展行动</a></li>
+            <li><a href="./www/zhinengzongduan.html" class="nav-link">智能智能产业培育行动</a></li>
+            <li><a href="./www/ydyl.html" class="nav-link">数字生态优化行动</a></li>
+            <li id="datetime"></li>
+        </ul>
+    </nav>
+    <section class="welcome-screen">
+        <div class="background-slideshow">
+            <div class="background-slide" style="background-image: url('image/zlts.png')"></div>
+            <div class="background-slide" style="background-image: url('image/b.png')"></div>
+            <div class="background-slide" style="background-image: url('image/c.png')"></div>
+            <div class="background-slide" style="background-image: url('image/d.png')"></div>
+        </div>
+    </section>
+    <script>
+        // 获取所有导航链接
+const navLinks = document.querySelectorAll('.nav-link');
+
+// 获取当前页面的 URL
+const currentPath = window.location.pathname;
+
+// 去掉文件名的扩展名
+const currentPage = currentPath.substring(currentPath.lastIndexOf('/') + 1, currentPath.lastIndexOf('.'));
+
+console.log('当前页面:', currentPage);
+
+// 根据当前页面 URL 设置高亮
+navLinks.forEach(link => {
+    // 获取链接的 href 属性值
+    const linkPath = link.getAttribute('href');
+
+    // 去掉链接的文件名扩展名
+    const linkPage = linkPath.substring(linkPath.lastIndexOf('/') + 1, linkPath.lastIndexOf('.'));
+
+    // 比较相对路径
+    if (linkPage === currentPage) {
+        link.classList.add('active');
+    } else {
+        link.classList.remove('active');
+    }
+});
+    </script>
+    
+    
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            document.getElementById('datetime').textContent = now.toLocaleDateString('zh-CN', options);
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        const slides = document.querySelectorAll('.background-slide');
+        let currentSlide = 0;
+
+        function showFadeEffect() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+            currentSlide = (currentSlide + 1) % slides.length;
+        }
+
+        setInterval(showFadeEffect, 5000); // 每5秒切换一次
+        showFadeEffect(); // 初始化显示
+    </script>
+</body>
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+

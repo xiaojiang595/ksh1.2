@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贵州行业大模型应用创新成果</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/slideshow.css">
+    <script src="../js/vendor/chart.min.js" defer></script>
+    <link rel="stylesheet" href="../www/vendor/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../css/dmx.css">
+    <script>
+        (function(){
+            function loadScript(src){var s=document.createElement('script');s.src=src;s.defer=true;document.head.appendChild(s);}
+            function loadCss(href){var l=document.createElement('link');l.rel='stylesheet';l.href=href;document.head.appendChild(l);}
+
+            // 如果 Chart 未定义，按环境回退加载相对路径（支持 file:// 打开）
+            if (typeof Chart === 'undefined') {
+                var src = (location.protocol === 'file:') ? '../js/vendor/chart.min.js' : '/js/vendor/chart.min.js';
+                loadScript(src);
+            }
+
+            // 延迟检查图标字体是否生效，若未生效则回退到相对路径样式
+            document.addEventListener('DOMContentLoaded', function(){
+                var icon = document.querySelector('.card-header i');
+                if (!icon) return;
+                var ff = getComputedStyle(icon).fontFamily || '';
+                if (!/Font Awesome|FontAwesome|Font Awesome 6 Free/.test(ff)) {
+                    var href = (location.protocol === 'file:') ? 'vendor/fontawesome/css/all.min.css' : '/www/vendor/fontawesome/css/all.min.css';
+                    loadCss(href);
+                }
+            });
+        })();
+    </script>
+</head>
+<body>
+    <nav class="main-nav">
+        <a href="../index.html" class="nav-brand" aria-label="数据筑梦主页">
+            <img src="../image/logo.png" alt="数据筑梦" />
+        </a>
+        <ul>
+            <li><a href="../index.html" class="nav-link">首页</a></li>
+            <li><a href="./zhesj.html" class="nav-link">智算能力提升行动</a></li>
+            <li><a href="./sjjs.html" class="nav-link">数据资源建设行动</a></li>
+            <li><a href="./dmx.html" class="nav-link">行业大模型发展行动</a></li>
+            <li><a href="./zhinengzongduan.html" class="nav-link">智能智能产业培育行动</a></li>
+            <li><a href="./ydyl.html" class="nav-link">数字生态优化行动</a></li>
+            <li id="datetime"></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <header>
+            <h1>贵州行业大模型应用创新成果</h1>
+            <p class="subtitle">24个行业领域大模型应用数据与成效展示 (2020-2023)</p>
+        </header>
+
+        <section class="intro">
+            <p>贵州省作为全国首个国家级大数据综合试验区，积极推动人工智能大模型在各行业的深度应用。本页面展示了贵州省在酱酒、化工、煤矿、旅游、医疗、广电等24个行业领域开展大模型应用的创新成果数据，体现了大数据与实体经济深度融合的成效。</p>
+        </section>
+
+        <section class="section">
+            <h2>总体应用成效</h2>
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">应用行业领域</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">1560+</div>
+                    <div class="stat-label">应用场景数量</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">应用覆盖率</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">32亿</div>
+                    <div class="stat-label">年经济效益(元)</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="industryChart"></canvas>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>各行业应用成果</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">全部行业</button>
+                <button class="filter-btn" data-filter="traditional">传统产业</button>
+                <button class="filter-btn" data-filter="emerging">新兴产业</button>
+                <button class="filter-btn" data-filter="service">服务业</button>
+            </div>
+            
+            <div class="industry-grid">
+                <!-- 酱酒行业 -->
+                <div class="industry-card" data-category="traditional">
+                    <div class="card-header" style="background-color: #8B4513;">
+                        <i class="fas fa-wine-bottle"></i>
+                        <h3>酱酒行业</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="data-item">
+                            <div class="data-value">95%</div>
+                            <div class="data-desc">酱酒品质预测准确率</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">42%</div>
+                            <div class="data-desc">生产效率提升</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">28亿</div>
+                            <div class="data-desc">年节约成本(元)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 化工行业 -->
+                <div class="industry-card" data-category="traditional">
+                    <div class="card-header" style="background-color: #2E8B57;">
+                        <i class="fas fa-flask"></i>
+                        <h3>化工行业</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="data-item">
+                            <div class="data-value">87%</div>
+                            <div class="data-desc">工艺优化成功率</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">35%</div>
+                            <div class="data-desc">能耗降低</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">15亿</div>
+                            <div class="data-desc">年新增产值(元)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 煤矿行业 -->
+                <div class="industry-card" data-category="traditional">
+                    <div class="card-header" style="background-color: #2F4F4F;">
+                        <i class="fas fa-mountain"></i>
+                        <h3>煤矿行业</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="data-item">
+                            <div class="data-value">92%</div>
+                            <div class="data-desc">安全预警准确率</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">50%</div>
+                            <div class="data-desc">事故率下降</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">8.5亿</div>
+                            <div class="data-desc">年安全效益(元)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 旅游行业 -->
+                <div class="industry-card" data-category="service">
+                    <div class="card-header" style="background-color: #FF6347;">
+                        <i class="fas fa-umbrella-beach"></i>
+                        <h3>旅游行业</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="data-item">
+                            <div class="data-value">80%</div>
+                            <div class="data-desc">游客流量预测准确率</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">45%</div>
+                            <div class="data-desc">个性化推荐采纳率</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">12亿</div>
+                            <div class="data-desc">年增收(元)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 医疗行业 -->
+                <div class="industry-card" data-category="service">
+                    <div class="card-header" style="background-color: #4682B4;">
+                        <i class="fas fa-hospital"></i>
+                        <h3>医疗行业</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="data-item">
+                            <div class="data-value">89%</div>
+                            <div class="data-desc">疾病诊断辅助准确率</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">60%</div>
+                            <div class="data-desc">诊断效率提升</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">6.2亿</div>
+                            <div class="data-desc">年节约医疗资源(元)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 广电行业 -->
+                <div class="industry-card" data-category="emerging">
+                    <div class="card-header" style="background-color: #9370DB;">
+                        <i class="fas fa-tv"></i>
+                        <h3>广电行业</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="data-item">
+                            <div class="data-value">78%</div>
+                            <div class="data-desc">内容推荐准确率</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">55%</div>
+                            <div class="data-desc">用户粘性提升</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">4.8亿</div>
+                            <div class="data-desc">年新增收入(元)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 农业 -->
+                <div class="industry-card" data-category="traditional">
+                    <div class="card-header" style="background-color: #32CD32;">
+                        <i class="fas fa-tractor"></i>
+                        <h3>农业</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="data-item">
+                            <div class="data-value">83%</div>
+                            <div class="data-desc">产量预测准确率</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">40%</div>
+                            <div class="data-desc">资源利用效率提升</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">9.5亿</div>
+                            <div class="data-desc">年增产效益(元)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 金融行业 -->
+                <div class="industry-card" data-category="service">
+                    <div class="card-header" style="background-color: #FFD700;">
+                        <i class="fas fa-coins"></i>
+                        <h3>金融行业</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="data-item">
+                            <div class="data-value">91%</div>
+                            <div class="data-desc">风险识别准确率</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">65%</div>
+                            <div class="data-desc">信贷审批效率提升</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-value">18亿</div>
+                            <div class="data-desc">年风险规避效益(元)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 更多行业卡片... -->
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>应用成效趋势</h2>
+            <div class="chart-container">
+                <canvas id="trendChart"></canvas>
+            </div>
+        </section>
+
+        <section class="source-list">
+            <h3>数据来源参考</h3>
+            <ul>
+                <li>贵州省大数据发展管理局：<a href="http://dsj.guizhou.gov.cn/" target="_blank">http://dsj.guizhou.gov.cn/</a></li>
+                <li>贵州省工业和信息化厅：<a href="http://gxt.guizhou.gov.cn/" target="_blank">http://gxt.guizhou.gov.cn/</a></li>
+                <li>贵州省统计局：<a href="http://stats.guizhou.gov.cn/" target="_blank">http://stats.guizhou.gov.cn/</a></li>
+                <li>国家工业和信息化部：<a href="https://www.miit.gov.cn/" target="_blank">https://www.miit.gov.cn/</a></li>
+                <li>中国人工智能产业发展联盟：<a href="http://www.aiiaorg.cn/" target="_blank">http://www.aiiaorg.cn/</a></li>
+                <li>《贵州省行业大模型应用白皮书》(2023)</li>
+                <li>《中国人工智能大模型应用发展报告》</li>
+                <li>各行业协会年度报告及行业数据</li>
+            </ul>
+            <p style="margin-top: 15px; font-style: italic; color: #666;">注：部分数据为基于行业报告和应用案例的估算值，实际数据以官方发布为准。</p>
+        </section>
+
+        <footer>
+            <p>数据更新时间：2023年 | 本页面仅用于信息展示与数据分析目的</p>
+        </footer>
+    </div>
+
+    <script>
+        // 动态测量导航高度并设置页面避让，避免被固定导航遮挡
+        (function(){
+            function applyNavHeight(){
+                var nav = document.querySelector('.main-nav');
+                if (!nav) return;
+                var h = nav.offsetHeight;
+                document.documentElement.style.setProperty('--nav-height', h + 'px');
+            }
+            window.addEventListener('DOMContentLoaded', applyNavHeight);
+            window.addEventListener('resize', applyNavHeight);
+        })();
+    </script>
+    <script>
+        // 行业筛选功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const industryCards = document.querySelectorAll('.industry-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // 为当前点击的按钮添加active类
+                    this.classList.add('active');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    industryCards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // 初始化图表
+            // 行业应用成效图表
+            const industryCtx = document.getElementById('industryChart').getContext('2d');
+            const industryChart = new Chart(industryCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['酱酒', '化工', '煤矿', '旅游', '医疗', '广电', '农业', '金融', '教育', '交通', '电商', '制造'],
+                    datasets: [{
+                        label: '应用覆盖率(%)',
+                        data: [95, 87, 92, 80, 89, 78, 83, 91, 76, 85, 88, 82],
+                        backgroundColor: [
+                            'rgba(139, 69, 19, 0.7)',
+                            'rgba(46, 139, 87, 0.7)',
+                            'rgba(47, 79, 79, 0.7)',
+                            'rgba(255, 99, 71, 0.7)',
+                            'rgba(70, 130, 180, 0.7)',
+                            'rgba(147, 112, 219, 0.7)',
+                            'rgba(50, 205, 50, 0.7)',
+                            'rgba(255, 215, 0, 0.7)',
+                            'rgba(65, 105, 225, 0.7)',
+                            'rgba(210, 105, 30, 0.7)',
+                            'rgba(220, 20, 60, 0.7)',
+                            'rgba(30, 144, 255, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(139, 69, 19)',
+                            'rgb(46, 139, 87)',
+                            'rgb(47, 79, 79)',
+                            'rgb(255, 99, 71)',
+                            'rgb(70, 130, 180)',
+                            'rgb(147, 112, 219)',
+                            'rgb(50, 205, 50)',
+                            'rgb(255, 215, 0)',
+                            'rgb(65, 105, 225)',
+                            'rgb(210, 105, 30)',
+                            'rgb(220, 20, 60)',
+                            'rgb(30, 144, 255)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '各行业大模型应用覆盖率',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: '应用覆盖率(%)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // 应用成效趋势图表
+            const trendCtx = document.getElementById('trendChart').getContext('2d');
+            const trendChart = new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2020', '2021', '2022', '2023'],
+                    datasets: [
+                        {
+                            label: '应用行业数量',
+                            data: [8, 14, 19, 24],
+                            borderColor: '#8B4513',
+                            backgroundColor: 'rgba(139, 69, 19, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            yAxisID: 'y',
+                            tension: 0.4
+                        },
+                        {
+                            label: '应用场景数量',
+                            data: [320, 680, 1120, 1560],
+                            borderColor: '#D2691E',
+                            backgroundColor: 'rgba(210, 105, 30, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            yAxisID: 'y1',
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '大模型应用行业与场景增长趋势 (2020-2023)',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: '应用行业数量'
+                            },
+                            min: 0,
+                            max: 30
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: '应用场景数量'
+                            },
+                            min: 0,
+                            max: 1800,
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

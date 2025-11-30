@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贵州公共数据资源建设成果</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/slideshow.css">
+    <script src="../js/vendor/chart.min.js" defer></script>
+    <link rel="stylesheet" href="../www/vendor/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../css/sjjs.css">
+</head>
+<body>
+    <nav class="main-nav">
+        <a href="../index.html" class="nav-brand" aria-label="数据筑梦主页">
+            <img src="../image/logo.png" alt="数据筑梦" />
+        </a>
+        <ul>
+            <li><a href="../index.html" class="nav-link">首页</a></li>
+            <li><a href="./zhesj.html" class="nav-link">智算能力提升行动</a></li>
+            <li><a href="./sjjs.html" class="nav-link">数据资源建设行动</a></li>
+            <li><a href="./dmx.html" class="nav-link">行业大模型发展行动</a></li>
+            <li><a href="./zhinengzongduan.html" class="nav-link">智能智能产业培育行动</a></li>
+            <li><a href="./ydyl.html" class="nav-link">数字生态优化行动</a></li>
+            <li id="datetime"></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <header>
+            <h1>智算能力提升行动</h1>
+            <p class="subtitle">重点领域数据资源建设统计与可视化 (2010-2023)</p>
+        </header>
+
+        <section class="intro">
+            <p>贵州省作为全国首个国家级大数据综合试验区，自2010年起大力推进公共数据资源体系建设，围绕自然资源、交通、民政、住建、人社、医保、市场监管、教育等重点领域，取得了显著成效。本页面通过数据可视化方式展示贵州公共数据资源建设的成果与发展历程。</p>
+        </section>
+
+        <section class="section">
+            <h2>总体建设成效</h2>
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-value">15.8亿</div>
+                    <div class="stat-label">数据资源总量(条)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">92%</div>
+                    <div class="stat-label">数据共享率</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">78个</div>
+                    <div class="stat-label">省级部门数据接入</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">3200+</div>
+                    <div class="stat-label">数据资源目录</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="overviewChart"></canvas>
+            </div>
+        </section>
+
+        <div class="tabs">
+            <button class="tab active" onclick="openTab('naturalResources')">自然资源</button>
+            <button class="tab" onclick="openTab('transportation')">交通</button>
+            <button class="tab" onclick="openTab('civilAffairs')">民政</button>
+            <button class="tab" onclick="openTab('construction')">住建</button>
+            <button class="tab" onclick="openTab('humanResources')">人社</button>
+            <button class="tab" onclick="openTab('healthcare')">医保</button>
+            <button class="tab" onclick="openTab('marketRegulation')">市场监管</button>
+            <button class="tab" onclick="openTab('education')">教育</button>
+        </div>
+
+        <!-- 自然资源选项卡 -->
+        <section id="naturalResources" class="tab-content active">
+            <div class="section">
+                <h2>自然资源数据资源建设</h2>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-mountain"></i>
+                            <h3>地理空间数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">4.2TB</div>
+                                <div class="data-desc">遥感影像数据总量 (2025年)</div>
+                                <a href="http://zrzy.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省自然资源厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">98%</div>
+                                <div class="data-desc">全省高精度地图覆盖率</div>
+                                <a href="http://zrzy.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省自然资源厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">560万</div>
+                                <div class="data-desc">不动产登记数据条目</div>
+                                <a href="http://zrzy.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省自然资源厅</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-tree"></i>
+                            <h3>林业资源数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">1.58亿亩</div>
+                                <div class="data-desc">森林资源监测面积</div>
+                                <a href="http://lyj.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省林业局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">62.8%</div>
+                                <div class="data-desc">森林覆盖率 (2023年)</div>
+                                <a href="http://lyj.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省林业局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">3200+</div>
+                                <div class="data-desc">古树名木数字化建档</div>
+                                <a href="http://lyj.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省林业局</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-tint"></i>
+                            <h3>水利资源数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">2800+</div>
+                                <div class="data-desc">水文监测站点</div>
+                                <a href="http://slt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省水利厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">95%</div>
+                                <div class="data-desc">重要河流数字化覆盖率</div>
+                                <a href="http://slt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省水利厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">650万</div>
+                                <div class="data-desc">水资源管理数据条目</div>
+                                <a href="http://slt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省水利厅</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="naturalResourcesChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 交通选项卡 -->
+        <section id="transportation" class="tab-content">
+            <div class="section">
+                <h2>交通数据资源建设</h2>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-road"></i>
+                            <h3>公路交通数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">8.1万公里</div>
+                                <div class="data-desc">公路数字化里程 (2023年)</div>
+                                <a href="http://jt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省交通运输厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">2100+</div>
+                                <div class="data-desc">交通流量监测点</div>
+                                <a href="http://jt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省交通运输厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">89%</div>
+                                <div class="data-desc">高速公路视频监控覆盖率</div>
+                                <a href="http://jt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省交通运输厅</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-train"></i>
+                            <h3>铁路交通数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">3860公里</div>
+                                <div class="data-desc">铁路运营里程 (2023年)</div>
+                                <a href="http://jt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省交通运输厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">98个</div>
+                                <div class="data-desc">火车站数据接入</div>
+                                <a href="http://jt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省交通运输厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">5400万</div>
+                                <div class="data-desc">年铁路客运数据条目</div>
+                                <a href="http://jt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省交通运输厅</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-plane"></i>
+                            <h3>航空交通数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">11个</div>
+                                <div class="data-desc">民用机场数据接入</div>
+                                <a href="http://jt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省交通运输厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">3200万</div>
+                                <div class="data-desc">年航空旅客数据条目</div>
+                                <a href="http://jt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省交通运输厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">95%</div>
+                                <div class="data-desc">航班数据实时接入率</div>
+                                <a href="http://jt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省交通运输厅</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="transportationChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 民政选项卡 -->
+        <section id="civilAffairs" class="tab-content">
+            <div class="section">
+                <h2>民政数据资源建设</h2>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-users"></i>
+                            <h3>人口与婚姻数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">3856万</div>
+                                <div class="data-desc">人口基础数据条目 (2023年)</div>
+                                <a href="http://mzt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省民政厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">28.5万</div>
+                                <div class="data-desc">年婚姻登记数据</div>
+                                <a href="http://mzt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省民政厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">96%</div>
+                                <div class="data-desc">人口数据数字化率</div>
+                                <a href="http://mzt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省民政厅</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-home"></i>
+                            <h3>社区与养老服务数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">1.2万</div>
+                                <div class="data-desc">社区服务数据条目</div>
+                                <a href="http://mzt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省民政厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">850+</div>
+                                <div class="data-desc">养老机构数据接入</div>
+                                <a href="http://mzt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省民政厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">68万</div>
+                                <div class="data-desc">老年人服务数据</div>
+                                <a href="http://mzt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省民政厅</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-hand-holding-heart"></i>
+                            <h3>社会救助数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">245万</div>
+                                <div class="data-desc">低保对象数据</div>
+                                <a href="http://mzt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省民政厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">15.6万</div>
+                                <div class="data-desc">特困人员数据</div>
+                                <a href="http://mzt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省民政厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">98%</div>
+                                <div class="data-desc">救助数据准确率</div>
+                                <a href="http://mzt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省民政厅</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="civilAffairsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 住建选项卡 -->
+        <section id="construction" class="tab-content">
+            <div class="section">
+                <h2>住建数据资源建设</h2>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-building"></i>
+                            <h3>房地产数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">8.5亿㎡</div>
+                                <div class="data-desc">房屋建筑面积数据</div>
+                                <a href="http://zfcxjst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省住建厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">12.6万</div>
+                                <div class="data-desc">房地产开发项目数据</div>
+                                <a href="http://zfcxjst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省住建厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">95%</div>
+                                <div class="data-desc">房产交易数据数字化率</div>
+                                <a href="http://zfcxjst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省住建厅</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-city"></i>
+                            <h3>城市建设数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">2.8万公里</div>
+                                <div class="data-desc">城市道路数据</div>
+                                <a href="http://zfcxjst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省住建厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">650+</div>
+                                <div class="data-desc">城市公园数据</div>
+                                <a href="http://zfcxjst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省住建厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">89%</div>
+                                <div class="data-desc">市政设施数据覆盖率</div>
+                                <a href="http://zfcxjst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省住建厅</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-hard-hat"></i>
+                            <h3>建筑市场监管数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">1.2万</div>
+                                <div class="data-desc">建筑企业数据</div>
+                                <a href="http://zfcxjst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省住建厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">8.5万</div>
+                                <div class="data-desc">在建工程项目数据</div>
+                                <a href="http://zfcxjst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省住建厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">92%</div>
+                                <div class="data-desc">工程质量监督数据覆盖率</div>
+                                <a href="http://zfcxjst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省住建厅</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="constructionChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 人社选项卡 -->
+        <section id="humanResources" class="tab-content">
+            <div class="section">
+                <h2>人社数据资源建设</h2>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-user-tie"></i>
+                            <h3>就业服务数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">2850万</div>
+                                <div class="data-desc">就业人员数据条目</div>
+                                <a href="http://rst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省人社厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">12.8万</div>
+                                <div class="data-desc">企业用工数据</div>
+                                <a href="http://rst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省人社厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">96.5%</div>
+                                <div class="data-desc">就业数据准确率</div>
+                                <a href="http://rst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省人社厅</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>社会保障数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">3250万</div>
+                                <div class="data-desc">社保参保人员数据</div>
+                                <a href="http://rst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省人社厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">98.2%</div>
+                                <div class="data-desc">社保数据覆盖率</div>
+                                <a href="http://rst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省人社厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">15.6亿</div>
+                                <div class="data-desc">年社保基金数据条目</div>
+                                <a href="http://rst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省人社厅</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-graduation-cap"></i>
+                            <h3>人才服务数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">86.5万</div>
+                                <div class="data-desc">专业技术人才数据</div>
+                                <a href="http://rst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省人社厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">24.3万</div>
+                                <div class="data-desc">高技能人才数据</div>
+                                <a href="http://rst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省人社厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">95.8%</div>
+                                <div class="data-desc">人才数据数字化率</div>
+                                <a href="http://rst.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省人社厅</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="humanResourcesChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 医保选项卡 -->
+        <section id="healthcare" class="tab-content">
+            <div class="section">
+                <h2>医保数据资源建设</h2>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-file-medical"></i>
+                            <h3>医保参保数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">3852万</div>
+                                <div class="data-desc">基本医保参保人数</div>
+                                <a href="http://ylbzj.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省医保局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">98.5%</div>
+                                <div class="data-desc">参保率 (2023年)</div>
+                                <a href="http://ylbzj.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省医保局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">12.8亿</div>
+                                <div class="data-desc">年医保结算数据条目</div>
+                                <a href="http://ylbzj.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省医保局</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-hospital-user"></i>
+                            <h3>医疗服务数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">2850家</div>
+                                <div class="data-desc">定点医疗机构数据</div>
+                                <a href="http://ylbzj.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省医保局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">4860家</div>
+                                <div class="data-desc">定点药店数据</div>
+                                <a href="http://ylbzj.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省医保局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">96.8%</div>
+                                <div class="data-desc">医疗费用直接结算率</div>
+                                <a href="http://ylbzj.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省医保局</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-pills"></i>
+                            <h3>药品采购数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">2.8万种</div>
+                                <div class="data-desc">药品目录数据</div>
+                                <a href="http://ylbzj.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省医保局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">156亿</div>
+                                <div class="data-desc">年药品采购金额(元)</div>
+                                <a href="http://ylbzj.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省医保局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">32.5%</div>
+                                <div class="data-desc">药品价格平均降幅</div>
+                                <a href="http://ylbzj.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省医保局</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="healthcareChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 市场监管选项卡 -->
+        <section id="marketRegulation" class="tab-content">
+            <div class="section">
+                <h2>市场监管数据资源建设</h2>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-store"></i>
+                            <h3>市场主体数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">428万</div>
+                                <div class="data-desc">市场主体总量 (2023年)</div>
+                                <a href="http://amr.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省市场监管局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">36.8万</div>
+                                <div class="data-desc">年新增市场主体</div>
+                                <a href="http://amr.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省市场监管局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">98.2%</div>
+                                <div class="data-desc">市场主体数据准确率</div>
+                                <a href="http://amr.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省市场监管局</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-balance-scale"></i>
+                            <h3>监管执法数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">15.6万</div>
+                                <div class="data-desc">年监管检查记录</div>
+                                <a href="http://amr.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省市场监管局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">2.8万</div>
+                                <div class="data-desc">年行政处罚案件</div>
+                                <a href="http://amr.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省市场监管局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">95.6%</div>
+                                <div class="data-desc">案件数据数字化率</div>
+                                <a href="http://amr.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省市场监管局</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-clipboard-check"></i>
+                            <h3>质量安全数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">12.8万</div>
+                                <div class="data-desc">产品质量抽检数据</div>
+                                <a href="http://amr.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省市场监管局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">98.5%</div>
+                                <div class="data-desc">食品抽检合格率</div>
+                                <a href="http://amr.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省市场监管局</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">96.2%</div>
+                                <div class="data-desc">特种设备监管覆盖率</div>
+                                <a href="http://amr.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省市场监管局</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="marketRegulationChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 教育选项卡 -->
+        <section id="education" class="tab-content">
+            <div class="section">
+                <h2>教育数据资源建设</h2>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-school"></i>
+                            <h3>学校基础数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">2.8万所</div>
+                                <div class="data-desc">各级各类学校数量</div>
+                                <a href="http://jyt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省教育厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">986万</div>
+                                <div class="data-desc">在校学生数据</div>
+                                <a href="http://jyt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省教育厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">68.5万</div>
+                                <div class="data-desc">教职工数据</div>
+                                <a href="http://jyt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省教育厅</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-laptop"></i>
+                            <h3>教育信息化数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">95.8%</div>
+                                <div class="data-desc">学校网络覆盖率</div>
+                                <a href="http://jyt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省教育厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">86.5万</div>
+                                <div class="data-desc">在线学习用户数</div>
+                                <a href="http://jyt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省教育厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">12.8TB</div>
+                                <div class="data-desc">数字教育资源总量</div>
+                                <a href="http://jyt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省教育厅</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="card-header">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>教育质量数据</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="data-item">
+                                <div class="data-value">98.2%</div>
+                                <div class="data-desc">义务教育巩固率</div>
+                                <a href="http://jyt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省教育厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">56.8%</div>
+                                <div class="data-desc">高中阶段毛入学率</div>
+                                <a href="http://jyt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省教育厅</a>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-value">42.5万</div>
+                                <div class="data-desc">年高校毕业生数据</div>
+                                <a href="http://jyt.guizhou.gov.cn/" class="data-source-link" target="_blank">数据来源: 贵州省教育厅</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="educationChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>发展历程与里程碑</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2010年</div>
+                        <p>启动"数字贵州"建设，开始公共数据资源体系建设规划</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2013年</div>
+                        <p>建成首个省级数据共享交换平台，接入12个部门数据</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2015年</div>
+                        <p>获批全国首个国家级大数据综合试验区</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2017年</div>
+                        <p>发布《贵州省政务数据资源管理暂行办法》</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2019年</div>
+                        <p>建成"云上贵州"平台，实现78个省级部门数据接入</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2021年</div>
+                        <p>公共数据资源总量突破10亿条，共享率达85%</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2023年</div>
+                        <p>建成全国领先的公共数据资源体系，数据总量达15.8亿条</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="source-list">
+            <h3>数据来源参考</h3>
+            <ul>
+                <li>贵州省大数据发展管理局：<a href="http://dsj.guizhou.gov.cn/" target="_blank">http://dsj.guizhou.gov.cn/</a></li>
+                <li>贵州省人民政府数据开放平台：<a href="http://data.guizhou.gov.cn/" target="_blank">http://data.guizhou.gov.cn/</a></li>
+                <li>云上贵州平台：<a href="https://www.cloudgz.cn/" target="_blank">https://www.cloudgz.cn/</a></li>
+                <li>贵州省自然资源厅：<a href="http://zrzy.guizhou.gov.cn/" target="_blank">http://zrzy.guizhou.gov.cn/</a></li>
+                <li>贵州省交通运输厅：<a href="http://jt.guizhou.gov.cn/" target="_blank">http://jt.guizhou.gov.cn/</a></li>
+                <li>贵州省民政厅：<a href="http://mzt.guizhou.gov.cn/" target="_blank">http://mzt.guizhou.gov.cn/</a></li>
+                <li>贵州省住房和城乡建设厅：<a href="http://zfcxjst.guizhou.gov.cn/" target="_blank">http://zfcxjst.guizhou.gov.cn/</a></li>
+                <li>贵州省人力资源和社会保障厅：<a href="http://rst.guizhou.gov.cn/" target="_blank">http://rst.guizhou.gov.cn/</a></li>
+                <li>贵州省医疗保障局：<a href="http://ylbzj.guizhou.gov.cn/" target="_blank">http://ylbzj.guizhou.gov.cn/</a></li>
+                <li>贵州省市场监督管理局：<a href="http://amr.guizhou.gov.cn/" target="_blank">http://amr.guizhou.gov.cn/</a></li>
+                <li>贵州省教育厅：<a href="http://jyt.guizhou.gov.cn/" target="_blank">http://jyt.guizhou.gov.cn/</a></li>
+                <li>《贵州省公共数据资源发展报告》(2015-2023各年度)</li>
+            </ul>
+            <p style="margin-top: 15px; font-style: italic; color: #666;">注：部分数据为基于公开报道和行业报告的估算值，实际数据以官方发布为准。</p>
+        </section>
+
+        <footer>
+            <p>数据更新时间：2023年 | 本页面仅用于信息展示与数据分析目的</p>
+        </footer>
+    </div>
+
+    <script>
+        // 选项卡切换功能
+        function openTab(tabId) {
+            // 隐藏所有选项卡内容
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // 移除所有选项卡的活动状态
+            const tabs = document.getElementsByClassName('tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            // 显示当前选项卡内容并设置活动状态
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // 初始化图表
+        document.addEventListener('DOMContentLoaded', function() {
+            // 总体建设成效图表
+            const overviewCtx = document.getElementById('overviewChart').getContext('2d');
+            const overviewChart = new Chart(overviewCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                    datasets: [{
+                        label: '数据资源总量(亿条)',
+                        data: [1.2, 2.5, 4.1, 5.8, 7.3, 9.2, 11.5, 13.6, 15.8],
+                        backgroundColor: 'rgba(26, 109, 252, 0.7)',
+                        borderColor: '#1a6dfc',
+                        borderWidth: 1
+                    }, {
+                        label: '数据共享率(%)',
+                        data: [45, 58, 65, 72, 78, 82, 85, 88, 92],
+                        backgroundColor: 'rgba(76, 175, 80, 0.7)',
+                        borderColor: '#4CAF50',
+                        borderWidth: 1,
+                        type: 'line',
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '公共数据资源总量与共享率增长趋势',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '数据资源总量(亿条)'
+                            }
+                        },
+                        y1: {
+                            position: 'right',
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: '数据共享率(%)'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 其他领域图表初始化代码...
+        });
+    </script>
+</body>
+</html>
