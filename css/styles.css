@@ -32,10 +32,10 @@
     body {
       line-height: 1.6;
     }
-    /* 导航链接与普通文本的相对字号 */
+    /* 导航链接与普通文本的相对字号（适度缩小以改善密度） */
     .nav-link {
-      /* 导航文字响应式缩放：在中小屏不低于 20px，大屏 27–27px 区间 */
-      font-size: clamp(20px, 1.2vw + 0.2rem, 27px);
+      /* 导航文字响应式缩放：在小屏不低于 16px，大屏上限 20px */
+      font-size: clamp(16px, 1.0vw + 0.1rem, 20px);
       line-height: 1.2;
     }
     /* 常用标题的响应式比例（若页面内未覆盖，则生效）*/
@@ -59,14 +59,17 @@
     /* 左侧品牌标题样式 */
     .nav-brand {
       position: absolute; /* 固定在左侧 */
-      left: 32px;
-      top: 50%;
-      transform: translateY(-50%);
+      left: 16px; /* 更靠近左侧，适配紧凑导航 */
+      top: 12px; /* 向上移动，靠近左上角 */
+      transform: none;
       font-weight: 800;
       text-decoration: none;
       color: #2a2a2a;
       letter-spacing: 0.5px;
-      font-size: clamp(22px, 1.4vw + 0.5rem, 32px); /* 若为文字品牌时生效 */
+      font-size: clamp(20px, 1.0vw + 0.4rem, 28px); /* 略微降低文字品牌上限 */
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     
     /* 基本链接样式 */
