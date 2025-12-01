@@ -1,107 +1,585 @@
-
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#2c8850">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>数据筑梦</title>
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="./css/slideshow.css">
+    <title>数据筑梦：贵州多领域数据资源建设可视化纪实</title>
+    <script src="./js/vendor/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1729 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0 20px;
+            background: linear-gradient(90deg, rgba(26, 95, 180, 0.3), rgba(41, 128, 185, 0.5), rgba(26, 95, 180, 0.3));
+            border-bottom: 3px solid #1a5fb4;
+            box-shadow: 0 4px 20px rgba(26, 95, 180, 0.5);
+            position: relative;
+        }
+        .header::before, .header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 200px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.3), transparent);
+            animation: shine 3s infinite;
+        }
+        .header::before { left: 0; }
+        .header::after { right: 0; animation-delay: 1.5s; }
+        @keyframes shine { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(52, 152, 219, 0.8);
+            letter-spacing: 4px;
+        }
+        .header .subtitle { font-size: 20px; color: #3498db; letter-spacing: 2px; }
+        .datetime {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 18px;
+            color: #3498db;
+        }
+        .container { max-width: 1920px; margin: 0 auto; padding: 20px; }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .stat-box {
+            background: linear-gradient(135deg, rgba(26, 95, 180, 0.2), rgba(41, 128, 185, 0.3));
+            border: 2px solid rgba(52, 152, 219, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-box::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
+            animation: pulse 4s infinite;
+        }
+        @keyframes pulse { 0%, 100% { transform: scale(0.8); opacity: 0.5; } 50% { transform: scale(1.2); opacity: 1; } }
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: #3498db;
+            box-shadow: 0 8px 30px rgba(52, 152, 219, 0.6);
+        }
+        .stat-box .label { font-size: 16px; color: #95a5a6; margin-bottom: 10px; }
+        .stat-box .value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #3498db;
+            text-shadow: 0 0 10px rgba(52, 152, 219, 0.8);
+        }
+        .stat-box .unit { font-size: 14px; color: #7f8c8d; margin-top: 5px; }
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .chart-box {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 31, 58, 0.9));
+            border: 2px solid rgba(52, 152, 219, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .chart-box h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #3498db;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        .chart-container { height: 300px; position: relative; }
+        .chart-box.large { grid-column: span 2; }
+        .chart-container.tall { height: 400px; }
+        .bottom-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        table th {
+            background: linear-gradient(135deg, rgba(26, 95, 180, 0.5), rgba(41, 128, 185, 0.6));
+            color: #fff;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            font-size: 14px;
+        }
+        table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            color: #ecf0f1;
+            font-size: 13px;
+        }
+        table tr:hover { background: rgba(52, 152, 219, 0.1); }
+        @media (max-width: 1600px) {
+            .chart-grid { grid-template-columns: repeat(2, 1fr); }
+            .chart-box.large { grid-column: span 2; }
+        }
+        @media (max-width: 1200px) {
+            .stats-row { grid-template-columns: repeat(3, 1fr); }
+            .chart-grid { grid-template-columns: 1fr; }
+            .chart-box.large { grid-column: span 1; }
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(26, 31, 58, 0.5); }
+        ::-webkit-scrollbar-thumb { background: rgba(52, 152, 219, 0.6); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(52, 152, 219, 0.9); }
+        .main-nav {
+            background: linear-gradient(90deg, rgba(26, 95, 180, 0.95), rgba(41, 128, 185, 0.95));
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-brand {
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+        }
+        .nav-brand img {
+            height: 40px;
+            width: auto;
+        }
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+        .main-nav li {
+            margin: 0;
+        }
+        .main-nav .nav-link {
+            display: block;
+            padding: 15px 20px;
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        .main-nav .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            border-bottom-color: #fff;
+        }
+        .main-nav .nav-link.active {
+            background: rgba(255,255,255,0.15);
+            border-bottom-color: #fff;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <nav class="main-nav">
         <a href="./index.html" class="nav-brand" aria-label="数据筑梦主页">
-            <img src="image/logo.png" alt="数据筑梦" />
+            <img src="./image/logo.png" alt="数据筑梦" onerror="this.style.display='none'" />
         </a>
         <ul>
-            <li><a href="./index.html" class="nav-link">首页</a></li>
+            <li><a href="./index.html" class="nav-link active">首页</a></li>
             <li><a href="./www/zhesj.html" class="nav-link">智算能力提升行动</a></li>
             <li><a href="./www/sjjs.html" class="nav-link">数据资源建设行动</a></li>
             <li><a href="./www/dmx.html" class="nav-link">行业大模型发展行动</a></li>
-            <li><a href="./www/zhinengzongduan.html" class="nav-link">智能智能产业培育行动</a></li>
+            <li><a href="./www/zhinengzongduan.html" class="nav-link">智能终端产业培育行动</a></li>
             <li><a href="./www/ydyl.html" class="nav-link">数字生态优化行动</a></li>
-            <li id="datetime"></li>
+            <li id="datetime" style="padding: 15px 20px; color: #ecf0f1; font-size: 14px;"></li>
         </ul>
     </nav>
-    <section class="welcome-screen">
-        <div class="background-slideshow">
-            <div class="background-slide" style="background-image: url('image/zlts.png')"></div>
-            <div class="background-slide" style="background-image: url('image/b.png')"></div>
-            <div class="background-slide" style="background-image: url('image/c.png')"></div>
-            <div class="background-slide" style="background-image: url('image/d.png')"></div>
+    <div class="header">
+        <h1>数据筑梦：贵州多领域数据资源建设可视化纪实</h1>
+        <div class="subtitle">2025-2027年行动方案实施监测</div>
+    </div>
+
+    <div class="container">
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="label">算力规模(2027目标)</div>
+                <div class="value">210</div>
+                <div class="unit">Eflops</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">数据资源总量</div>
+                <div class="value">15.8</div>
+                <div class="unit">亿条</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">大模型应用场景</div>
+                <div class="value">500</div>
+                <div class="unit">个</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">智能终端年产量</div>
+                <div class="value">1.2</div>
+                <div class="unit">亿台</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">数字经济占GDP</div>
+                <div class="value">35</div>
+                <div class="unit">%</div>
+            </div>
         </div>
-    </section>
+
+        <div class="chart-grid">
+            <div class="chart-box">
+                <h3>一、智算能力提升行动 - 算力规模增长趋势</h3>
+                <div class="chart-container"><canvas id="chart1"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h3>一、智算能力提升行动 - 投资额与产业规模</h3>
+                <div class="chart-container"><canvas id="chart2"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h3>二、数据资源建设行动 - 数据资源总量增长</h3>
+                <div class="chart-container"><canvas id="chart3"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h3>二、数据资源建设行动 - 重点领域数据共享率</h3>
+                <div class="chart-container"><canvas id="chart4"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h3>三、行业大模型发展行动 - 各行业应用覆盖率</h3>
+                <div class="chart-container"><canvas id="chart5"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h3>三、行业大模型发展行动 - 应用场景增长趋势</h3>
+                <div class="chart-container"><canvas id="chart6"></canvas></div>
+            </div>
+        </div>
+
+        <div class="bottom-section">
+            <div class="chart-box">
+                <h3>四、智能终端产业培育行动 - 产业发展指标</h3>
+                <table>
+                    <thead><tr><th>指标</th><th>2020年</th><th>2022年</th><th>2023年</th></tr></thead>
+                    <tbody>
+                        <tr><td>服务器承载能力</td><td>220万台</td><td>350万台</td><td>400万台</td></tr>
+                        <tr><td>数据中心数量</td><td>30+个</td><td>35+个</td><td>40+个</td></tr>
+                        <tr><td>智能终端产量</td><td>8500万台</td><td>1.05亿台</td><td>1.2亿台</td></tr>
+                        <tr><td>智能终端产值</td><td>2200亿元</td><td>3000亿元</td><td>3500亿元</td></tr>
+                        <tr><td>大数据企业数量</td><td>4800家</td><td>5700家</td><td>6000家</td></tr>
+                        <tr><td>数字经济占GDP</td><td>31%</td><td>34%</td><td>35%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="chart-box">
+                <h3>五、数字生态优化行动 - 数据要素市场发展</h3>
+                <table>
+                    <thead><tr><th>指标</th><th>2022年</th><th>2023年</th><th>2024年</th><th>2025年(预)</th></tr></thead>
+                    <tbody>
+                        <tr><td>数据交易额</td><td>35亿元</td><td>68亿元</td><td>113.51亿</td><td>150亿元</td></tr>
+                        <tr><td>交易主体数量</td><td>500家</td><td>750家</td><td>1100家</td><td>1150家</td></tr>
+                        <tr><td>数据产品数量</td><td>200个</td><td>400个</td><td>550个</td><td>600个</td></tr>
+                        <tr><td>市场主体数量</td><td>300家</td><td>400+家</td><td>450家</td><td>500家</td></tr>
+                        <tr><td>网民规模</td><td>2880万</td><td>3080万</td><td>3280万</td><td>3580万</td></tr>
+                        <tr><td>互联网普及率</td><td>79.5%</td><td>84.6%</td><td>89.2%</td><td>92.5%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-box large">
+                <h3>四、智能终端产业培育行动 - 数字经济综合指标</h3>
+                <div class="chart-container tall"><canvas id="chart7"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h3>五、数字生态优化行动 - 数据交易市场增长</h3>
+                <div class="chart-container tall"><canvas id="chart8"></canvas></div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // 获取所有导航链接
-const navLinks = document.querySelectorAll('.nav-link');
-
-// 获取当前页面的 URL
-const currentPath = window.location.pathname;
-
-// 去掉文件名的扩展名
-const currentPage = currentPath.substring(currentPath.lastIndexOf('/') + 1, currentPath.lastIndexOf('.'));
-
-console.log('当前页面:', currentPage);
-
-// 根据当前页面 URL 设置高亮
-navLinks.forEach(link => {
-    // 获取链接的 href 属性值
-    const linkPath = link.getAttribute('href');
-
-    // 去掉链接的文件名扩展名
-    const linkPage = linkPath.substring(linkPath.lastIndexOf('/') + 1, linkPath.lastIndexOf('.'));
-
-    // 比较相对路径
-    if (linkPage === currentPage) {
-        link.classList.add('active');
-    } else {
-        link.classList.remove('active');
-    }
-});
-    </script>
-    
-    
-    <script>
-        function updateDateTime() {
+        // 时间更新
+        function updateTime() {
             const now = new Date();
-            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-            document.getElementById('datetime').textContent = now.toLocaleDateString('zh-CN', options);
+            document.getElementById('datetime').textContent = 
+                now.toLocaleDateString('zh-CN', {year:'numeric',month:'2-digit',day:'2-digit',weekday:'short'}) + ' ' +
+                now.toLocaleTimeString('zh-CN', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
         }
-        setInterval(updateDateTime, 1000);
-        updateDateTime();
+        setInterval(updateTime, 1000);
+        updateTime();
 
-        const slides = document.querySelectorAll('.background-slide');
-        let currentSlide = 0;
-
-        function showFadeEffect() {
-            slides.forEach((slide, index) => {
-                slide.classList.remove('active');
-                if (index === currentSlide) {
-                    slide.classList.add('active');
+        // 数字滚动
+        function animateValue(el, start, end, duration) {
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+            const timer = setInterval(() => {
+                current += increment;
+                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    current = end;
+                    clearInterval(timer);
                 }
-            });
-            currentSlide = (currentSlide + 1) % slides.length;
+                el.textContent = Math.floor(current);
+            }, 16);
         }
 
-        setInterval(showFadeEffect, 5000); // 每5秒切换一次
-        showFadeEffect(); // 初始化显示
+        window.addEventListener('load', () => {
+            const boxes = document.querySelectorAll('.stat-box .value');
+            const values = [210, 85, 50, 500, 48];
+            boxes.forEach((box, i) => {
+                box.textContent = '0';
+                setTimeout(() => animateValue(box, 0, values[i], 2000), 500 + i * 200);
+            });
+        });
+
+        // 图表配置
+        const colors = {
+            blue: 'rgba(52,152,219,0.8)', green: 'rgba(46,204,113,0.8)', red: 'rgba(231,76,60,0.8)',
+            yellow: 'rgba(241,196,15,0.8)', purple: 'rgba(155,89,182,0.8)', orange: 'rgba(230,126,34,0.8)',
+            cyan: 'rgba(26,188,156,0.8)', gray: 'rgba(149,165,166,0.8)'
+        };
+
+        const commonOpts = {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 2000, easing: 'easeInOutQuart' },
+            plugins: {
+                legend: { labels: { color: '#ecf0f1', font: { size: 12 } } },
+                datalabels: {
+                    color: '#3498db',
+                    font: { size: 13, weight: 'bold' },
+                    formatter: (v) => Math.round(v * 10) / 10
+                }
+            },
+            scales: {
+                x: { ticks: { color: '#95a5a6' }, grid: { color: 'rgba(52,152,219,0.1)' } },
+                y: { ticks: { color: '#95a5a6' }, grid: { color: 'rgba(52,152,219,0.1)' } }
+            }
+        };
+
+        // 图表1: 算力规模
+        const c1 = new Chart(document.getElementById('chart1'), {
+            type: 'line',
+            data: {
+                labels: ['2024年底', '2025.8', '2025目标', '2026目标', '2027目标'],
+                datasets: [{
+                    label: '算力规模(Eflops)',
+                    data: [57, 85, 150, 180, 210],
+                    borderColor: colors.blue,
+                    backgroundColor: 'rgba(52,152,219,0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: commonOpts
+        });
+        setInterval(() => {
+            c1.getDatasetMeta(0).data.forEach((p, i) => {
+                p.options.pointRadius = 6 + Math.sin(Date.now() / 500 + i) * 2;
+            });
+            c1.update('none');
+        }, 50);
+
+        // 图表2: 投资额
+        const c2 = new Chart(document.getElementById('chart2'), {
+            type: 'line',
+            data: {
+                labels: ['2025年', '2026年', '2027年'],
+                datasets: [
+                    { label: '年度投资额(亿)', data: [130, 150, 180], borderColor: colors.blue, backgroundColor: 'rgba(52,152,219,0.2)', borderWidth: 3, fill: true, tension: 0.4 },
+                    { label: 'AI产业规模(亿)', data: [240, 290, 350], borderColor: colors.red, backgroundColor: 'rgba(231,76,60,0.2)', borderWidth: 3, fill: true, tension: 0.4 }
+                ]
+            },
+            options: commonOpts
+        });
+        setInterval(() => {
+            [0,1].forEach(i => {
+                c2.getDatasetMeta(i).data.forEach((p, j) => {
+                    p.options.pointRadius = 5 + Math.sin(Date.now() / 400 + j + i) * 1.5;
+                });
+            });
+            c2.update('none');
+        }, 50);
+
+        // 图表3: 数据资源总量增长(柱状图)
+        const c3 = new Chart(document.getElementById('chart3'), {
+            type: 'bar',
+            data: {
+                labels: ['2015', '2017', '2019', '2021', '2023'],
+                datasets: [{
+                    label: '数据资源总量(亿条)',
+                    data: [1.2, 4.1, 7.3, 11.5, 15.8],
+                    backgroundColor: colors.blue,
+                    borderColor: colors.blue,
+                    borderWidth: 1
+                }]
+            },
+            options: commonOpts
+        });
+        const d3 = [1.2, 4.1, 7.3, 11.5, 15.8];
+        setInterval(() => {
+            const t = Date.now() / 600;
+            c3.data.datasets[0].data = d3.map((v, i) => v + Math.sin(t + i) * v * 0.1);
+            c3.update('none');
+        }, 50);
+
+        // 图表4: 重点领域数据共享率(雷达图)
+        const c4 = new Chart(document.getElementById('chart4'), {
+            type: 'radar',
+            data: {
+                labels: ['自然资源', '交通', '民政', '住建', '人社', '医保', '市场监管', '教育'],
+                datasets: [{
+                    label: '数据共享率(%)',
+                    data: [95, 89, 96, 95, 96.5, 98.5, 98.2, 95.8],
+                    backgroundColor: 'rgba(52,152,219,0.3)',
+                    borderColor: colors.blue,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: { 
+                        beginAtZero: true, 
+                        max: 100, 
+                        ticks: { 
+                            display: true,
+                            color: '#95a5a6',
+                            stepSize: 20
+                        }, 
+                        grid: { color: 'rgba(52,152,219,0.2)' }, 
+                        pointLabels: { color: '#ecf0f1', font: { size: 11 } } 
+                    }
+                },
+                plugins: { 
+                    legend: { labels: { color: '#ecf0f1', font: { size: 12 } } }, 
+                    datalabels: { display: false } 
+                }
+            }
+        });
+        // 图表5: 各行业大模型应用覆盖率
+        const c5 = new Chart(document.getElementById('chart5'), {
+            type: 'bar',
+            data: {
+                labels: ['酱酒', '化工', '煤矿', '旅游', '医疗', '广电', '农业', '金融'],
+                datasets: [{
+                    label: '应用覆盖率(%)',
+                    data: [95, 30, 95, 65, 89, 97, 83, 50],
+                    backgroundColor: [colors.orange, colors.green, colors.gray, colors.red, colors.blue, colors.purple, colors.green, colors.yellow],
+                    borderWidth: 1
+                }]
+            },
+            options: commonOpts
+        });
+        const d5 = [95, 30, 95, 65, 89, 97, 83, 50];
+        setInterval(() => {
+            const t = Date.now() / 600;
+            c5.data.datasets[0].data = d5.map((v, i) => v + Math.sin(t + i) * v * 0.08);
+            c5.update('none');
+        }, 50);
+
+        // 图表6: 大模型应用场景增长趋势
+        const c6 = new Chart(document.getElementById('chart6'), {
+            type: 'line',
+            data: {
+                labels: ['2025', '2026', '2027'],
+                datasets: [{
+                    label: '大模型应用场景数量',
+                    data: [100, 200, 500],
+                    borderColor: colors.purple,
+                    backgroundColor: 'rgba(155,89,182,0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: commonOpts
+        });
+        setInterval(() => {
+            c6.getDatasetMeta(0).data.forEach((p, i) => {
+                p.options.pointRadius = 6 + Math.sin(Date.now() / 450 + i) * 2;
+            });
+            c6.update('none');
+        }, 50);
+
+        // 图表7: 数字经济综合指标
+        const c7 = new Chart(document.getElementById('chart7'), {
+            type: 'bar',
+            data: {
+                labels: ['2015', '2017', '2019', '2021', '2023'],
+                datasets: [
+                    { label: '数字经济占GDP(%)', data: [20, 26, 30, 32, 35], backgroundColor: colors.blue, yAxisID: 'y' },
+                    { label: '大数据企业(千家)', data: [1, 2.5, 4, 5.3, 6], backgroundColor: colors.green, yAxisID: 'y1' },
+                    { label: '智能终端产量(千万台)', data: [0.5, 3, 6.5, 10, 12], backgroundColor: colors.orange, yAxisID: 'y1' }
+                ]
+            },
+            options: {
+                ...commonOpts,
+                scales: {
+                    ...commonOpts.scales,
+                    y: { ...commonOpts.scales.y, max: 40, title: { display: true, text: '数字经济占GDP(%)', color: '#95a5a6' } },
+                    y1: { type: 'linear', position: 'right', ticks: { color: '#95a5a6' }, grid: { drawOnChartArea: false }, title: { display: true, text: '企业/产量', color: '#95a5a6' } }
+                }
+            }
+        });
+        const d7 = [[20, 26, 30, 32, 35], [1, 2.5, 4, 5.3, 6], [0.5, 3, 6.5, 10, 12]];
+        setInterval(() => {
+            const t = Date.now() / 600;
+            c7.data.datasets.forEach((ds, i) => {
+                ds.data = d7[i].map((v, j) => v + Math.sin(t + j) * v * 0.08);
+            });
+            c7.update('none');
+        }, 50);
+
+        // 图表8: 数据交易
+        const c8 = new Chart(document.getElementById('chart8'), {
+            type: 'line',
+            data: {
+                labels: ['2022', '2023', '2024', '2025上半年'],
+                datasets: [
+                    { label: '交易额(亿)', data: [20, 35, 55, 60], borderColor: colors.green, backgroundColor: 'rgba(46,204,113,0.2)', borderWidth: 3, fill: true, yAxisID: 'y' },
+                    { label: '主体(家)', data: [500, 750, 1100, 1150], borderColor: colors.orange, backgroundColor: 'rgba(230,126,34,0.2)', borderWidth: 3, fill: true, yAxisID: 'y1' }
+                ]
+            },
+            options: {
+                ...commonOpts,
+                scales: {
+                    ...commonOpts.scales,
+                    y1: { type: 'linear', position: 'right', ticks: { color: '#95a5a6' }, grid: { drawOnChartArea: false } }
+                }
+            }
+        });
+        setInterval(() => {
+            [0,1].forEach(i => {
+                c8.getDatasetMeta(i).data.forEach((p, j) => {
+                    p.options.pointRadius = 5 + Math.sin(Date.now() / 450 + j * 1.1 + i) * 2;
+                });
+            });
+            c8.update('none');
+        }, 50);
     </script>
 </body>
-</html> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</html>

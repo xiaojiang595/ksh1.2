@@ -3,635 +3,355 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>贵州省综合数据展示</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/slideshow.css">
-    <script src="../js/vendor/chart.min.js" defer></script>
-    <link rel="stylesheet" href="../www/vendor/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="../css/zhesj.css">
+    <title>数据筑梦：智算能力提升行动</title>
+    <script src="../js/vendor/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1729 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .main-nav {
+            background: linear-gradient(90deg, rgba(26, 95, 180, 0.95), rgba(41, 128, 185, 0.95));
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-brand {
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+        }
+        .nav-brand img {
+            height: 40px;
+            width: auto;
+        }
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+        .main-nav li {
+            margin: 0;
+        }
+        .main-nav .nav-link {
+            display: block;
+            padding: 15px 20px;
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        .main-nav .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            border-bottom-color: #fff;
+        }
+        .main-nav .nav-link.active {
+            background: rgba(255,255,255,0.15);
+            border-bottom-color: #fff;
+            font-weight: bold;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0 20px;
+            background: linear-gradient(90deg, rgba(26, 95, 180, 0.3), rgba(41, 128, 185, 0.5), rgba(26, 95, 180, 0.3));
+            border-bottom: 3px solid #1a5fb4;
+            box-shadow: 0 4px 20px rgba(26, 95, 180, 0.5);
+            position: relative;
+        }
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(52, 152, 219, 0.8);
+            letter-spacing: 4px;
+        }
+        .header .subtitle { font-size: 20px; color: #3498db; letter-spacing: 2px; }
+        .container { max-width: 1920px; margin: 0 auto; padding: 20px; }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .stat-box {
+            background: linear-gradient(135deg, rgba(26, 95, 180, 0.2), rgba(41, 128, 185, 0.3));
+            border: 2px solid rgba(52, 152, 219, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-box::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
+            animation: pulse 4s infinite;
+        }
+        @keyframes pulse { 0%, 100% { transform: scale(0.8); opacity: 0.5; } 50% { transform: scale(1.2); opacity: 1; } }
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: #3498db;
+            box-shadow: 0 8px 30px rgba(52, 152, 219, 0.6);
+        }
+        .stat-box .label { font-size: 16px; color: #95a5a6; margin-bottom: 10px; }
+        .stat-box .value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #3498db;
+            text-shadow: 0 0 10px rgba(52, 152, 219, 0.8);
+        }
+        .stat-box .unit { font-size: 14px; color: #7f8c8d; margin-top: 5px; }
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .chart-box {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 31, 58, 0.9));
+            border: 2px solid rgba(52, 152, 219, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .chart-box h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #3498db;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        .chart-container { height: 350px; position: relative; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        table th {
+            background: linear-gradient(135deg, rgba(26, 95, 180, 0.5), rgba(41, 128, 185, 0.6));
+            color: #fff;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            font-size: 14px;
+        }
+        table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            color: #ecf0f1;
+            font-size: 13px;
+        }
+        table tr:hover { background: rgba(52, 152, 219, 0.1); }
+    </style>
 </head>
 <body>
     <nav class="main-nav">
-        <a href="../index.html" class="nav-brand" aria-label="数据筑梦主页">
-            <img src="../image/logo.png" alt="数据筑梦" />
+        <a href="../index.html" class="nav-brand">
+            <img src="../image/logo.png" alt="数据筑梦" onerror="this.style.display='none'" />
         </a>
         <ul>
             <li><a href="../index.html" class="nav-link">首页</a></li>
-            <li><a href="./zhesj.html" class="nav-link">智算能力提升行动</a></li>
+            <li><a href="./zhesj.html" class="nav-link active">智算能力提升行动</a></li>
             <li><a href="./sjjs.html" class="nav-link">数据资源建设行动</a></li>
             <li><a href="./dmx.html" class="nav-link">行业大模型发展行动</a></li>
-            <li><a href="./zhinengzongduan.html" class="nav-link">智能智能产业培育行动</a></li>
+            <li><a href="./zhinengzongduan.html" class="nav-link">智能终端产业培育行动</a></li>
             <li><a href="./ydyl.html" class="nav-link">数字生态优化行动</a></li>
-            <li id="datetime"></li>
+            <li id="datetime" style="padding: 15px 20px; color: #ecf0f1; font-size: 14px;"></li>
         </ul>
     </nav>
-    <div style="height: 20px;"></div>
-    <div class="container">
-    <header>
-        <div class="container">
-            <h1>贵州省综合数据展示</h1>
-            <p>2015-2025年发电量、网络发展与区域协同情况分析</p>
-        </div>
-    </header>
     
-    <div class="container">
-        <section class="intro">
-            <h2>贵州省综合发展概况</h2>
-            <p>贵州省近年来在能源生产、网络基础设施建设和区域协同发展方面取得了显著成就。本页面展示了2015年至2025年贵州省在发电量、网络发展和区域协同发展等方面的关键数据。</p>
-        </section>
-        
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab('electricity')">发电量</button>
-            <button class="tab" onclick="switchTab('network')">网络发展</button>
-            <button class="tab" onclick="switchTab('regional')">区域协同发展</button>
-        </div>
-        
-        <!-- 发电量 -->
-        <section id="electricity" class="tab-content active electricity">
-            <h2>发电量统计</h2>
-            
-            <div class="card">
-                <h3>贵州省十年发电量统计</h3>
-                <div class="chart-container">
-                    <canvas id="electricityChart"></canvas>
-                </div>
-            </div>
-            
-            <div class="features">
-                <div class="feature">
-                    <h3>水电资源丰富</h3>
-                    <p>贵州省水资源丰富，乌江、北盘江等流域建设了多座大型水电站</p>
-                </div>
-                <div class="feature">
-                    <h3>火电稳定供应</h3>
-                    <p>依托丰富煤炭资源，火电在能源结构中占据重要地位，保障稳定供电</p>
-                </div>
-                <div class="feature">
-                    <h3>新能源快速发展</h3>
-                    <p>近年来风电、光伏等新能源发电装机容量快速增长</p>
-                </div>
-                <div class="feature">
-                    <h3>西电东送主力</h3>
-                    <p>贵州省是"西电东送"南部通道的重要送电省份</p>
-                </div>
-            </div>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>平均年发电量</h3>
-                    <div class="stat-value">2,850 亿千瓦时</div>
-                </div>
-                <div class="stat-card">
-                    <h3>最高年发电量</h3>
-                    <div class="stat-value">3,420 亿千瓦时</div>
-                </div>
-                <div class="stat-card">
-                    <h3>2025年预测发电量</h3>
-                    <div class="stat-value">3,420 亿千瓦时</div>
-                </div>
-                <div class="stat-card">
-                    <h3>西电东送电量</h3>
-                    <div class="stat-value">1,650 亿千瓦时</div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 网络发展 -->
-        <section id="network" class="tab-content network">
-            <h2>网络发展数据</h2>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>2025年网民规模</h3>
-                    <div class="stat-value">3580万</div>
-                    <p class="stat-desc">预计到2025年，贵州省网民规模将达到3580万人，较2015年增长超过200%。</p>
-                </div>
-                
-                <div class="stat-card">
-                    <h3>2025年互联网普及率</h3>
-                    <div class="stat-value">92.5%</div>
-                    <p class="stat-desc">预计到2025年，贵州省互联网普及率将达92.5%，接近全国领先水平。</p>
-                </div>
-                
-                <div class="stat-card">
-                    <h3>移动互联网用户</h3>
-                    <div class="stat-value">3450万</div>
-                    <p class="stat-desc">预计到2025年，贵州省移动互联网用户将达到3450万，占网民总数的96%以上。</p>
-                </div>
-            </div>
-            
-            <div class="data-section">
-                <div class="card">
-                    <h3>贵州省网民规模与互联网普及率</h3>
-                    <div class="chart-container">
-                        <canvas id="userChart"></canvas>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3>贵州省移动互联网用户发展情况</h3>
-                    <div class="chart-container">
-                        <canvas id="mobileChart"></canvas>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>贵州省网络发展数据表格</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>年份</th>
-                            <th>网民规模(万人)</th>
-                            <th>互联网普及率</th>
-                            <th>移动互联网用户(万人)</th>
-                            <th>宽带接入用户(万户)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>2015</td>
-                            <td>1520</td>
-                            <td>43.2%</td>
-                            <td>1320</td>
-                            <td>480</td>
-                        </tr>
-                        <tr>
-                            <td>2016</td>
-                            <td>1680</td>
-                            <td>47.5%</td>
-                            <td>1520</td>
-                            <td>520</td>
-                        </tr>
-                        <tr>
-                            <td>2017</td>
-                            <td>1850</td>
-                            <td>52.1%</td>
-                            <td>1720</td>
-                            <td>580</td>
-                        </tr>
-                        <tr>
-                            <td>2018</td>
-                            <td>2020</td>
-                            <td>56.7%</td>
-                            <td>1920</td>
-                            <td>650</td>
-                        </tr>
-                        <tr>
-                            <td>2019</td>
-                            <td>2200</td>
-                            <td>61.5%</td>
-                            <td>2120</td>
-                            <td>720</td>
-                        </tr>
-                        <tr>
-                            <td>2020</td>
-                            <td>2450</td>
-                            <td>68.2%</td>
-                            <td>2380</td>
-                            <td>810</td>
-                        </tr>
-                        <tr>
-                            <td>2021</td>
-                            <td>2680</td>
-                            <td>74.3%</td>
-                            <td>2600</td>
-                            <td>890</td>
-                        </tr>
-                        <tr>
-                            <td>2022</td>
-                            <td>2880</td>
-                            <td>79.5%</td>
-                            <td>2800</td>
-                            <td>950</td>
-                        </tr>
-                        <tr>
-                            <td>2023</td>
-                            <td>3080</td>
-                            <td>84.6%</td>
-                            <td>3000</td>
-                            <td>1020</td>
-                        </tr>
-                        <tr>
-                            <td>2024</td>
-                            <td>3280</td>
-                            <td>89.2%</td>
-                            <td>3200</td>
-                            <td>1080</td>
-                        </tr>
-                        <tr>
-                            <td>2025</td>
-                            <td>3580</td>
-                            <td>92.5%</td>
-                            <td>3450</td>
-                            <td>1150</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        
-        <!-- 区域协同发展 -->
-        <section id="regional" class="tab-content regional">
-            <h2>区域协同发展</h2>
-            <div class="data-section">
-                <div class="card">
-                    <h3>GDP增长趋势</h3>
-                    <div class="chart-container">
-                        <canvas id="gdpChart"></canvas>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3>区域协同指数</h3>
-                    <div class="chart-container">
-                        <canvas id="coordinationChart"></canvas>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>关键发展指标</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>年份</th>
-                            <th>全省GDP(亿元)</th>
-                            <th>区域协同指数</th>
-                            <th>城镇化率(%)</th>
-                            <th>城乡居民收入比</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>2015</td>
-                            <td>10,502</td>
-                            <td>0.65</td>
-                            <td>42.0</td>
-                            <td>3.07</td>
-                        </tr>
-                        <tr>
-                            <td>2017</td>
-                            <td>13,540</td>
-                            <td>0.68</td>
-                            <td>46.0</td>
-                            <td>2.95</td>
-                        </tr>
-                        <tr>
-                            <td>2019</td>
-                            <td>16,769</td>
-                            <td>0.72</td>
-                            <td>49.0</td>
-                            <td>2.83</td>
-                        </tr>
-                        <tr>
-                            <td>2021</td>
-                            <td>19,586</td>
-                            <td>0.76</td>
-                            <td>52.5</td>
-                            <td>2.71</td>
-                        </tr>
-                        <tr>
-                            <td>2023</td>
-                            <td>22,450</td>
-                            <td>0.80</td>
-                            <td>55.8</td>
-                            <td>2.58</td>
-                        </tr>
-                        <tr>
-                            <td>2025</td>
-                            <td>25,800</td>
-                            <td>0.85</td>
-                            <td>60.0</td>
-                            <td>2.45</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+    <div class="header">
+        <h1>数据筑梦：贵州多领域数据资源建设可视化纪实</h1>
+        <div class="subtitle">智算能力提升行动 - 2015-2025年发展数据分析</div>
     </div>
-    
-    <footer>
-        <div class="container">
-            <p>贵州省综合数据展示 &copy; 2023</p>
-            <p>数据来源：贵州省统计局、贵州省发展和改革委员会、贵州省通信管理局、贵州省能源局</p>
-            <p>注：2024-2025年数据为预测值</p>
+
+    <div class="container">
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="label">2025年发电量</div>
+                <div class="value">3420</div>
+                <div class="unit">亿千瓦时</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">网民规模(2025)</div>
+                <div class="value">3580</div>
+                <div class="unit">万人</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">互联网普及率</div>
+                <div class="value">92.5</div>
+                <div class="unit">%</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">2025年GDP</div>
+                <div class="value">25800</div>
+                <div class="unit">亿元</div>
+            </div>
         </div>
-    </footer>
+
+        <div class="chart-grid">
+            <div class="chart-box">
+                <h3>发电量增长趋势 (2015-2025)</h3>
+                <div class="chart-container"><canvas id="chart1"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h3>网民规模与互联网普及率</h3>
+                <div class="chart-container"><canvas id="chart2"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h3>移动互联网用户发展</h3>
+                <div class="chart-container"><canvas id="chart3"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h3>GDP增长与区域协同指数</h3>
+                <div class="chart-container"><canvas id="chart4"></canvas></div>
+            </div>
+        </div>
+
+        <div class="chart-box">
+            <h3>网络发展数据详表</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>年份</th>
+                        <th>网民规模(万人)</th>
+                        <th>互联网普及率</th>
+                        <th>移动互联网用户(万人)</th>
+                        <th>宽带接入用户(万户)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>2015</td><td>1520</td><td>43.2%</td><td>1320</td><td>480</td></tr>
+                    <tr><td>2016</td><td>1680</td><td>47.5%</td><td>1520</td><td>520</td></tr>
+                    <tr><td>2017</td><td>1850</td><td>52.1%</td><td>1720</td><td>580</td></tr>
+                    <tr><td>2018</td><td>2020</td><td>56.7%</td><td>1920</td><td>650</td></tr>
+                    <tr><td>2019</td><td>2200</td><td>61.5%</td><td>2120</td><td>720</td></tr>
+                    <tr><td>2020</td><td>2450</td><td>68.2%</td><td>2380</td><td>810</td></tr>
+                    <tr><td>2021</td><td>2680</td><td>74.3%</td><td>2600</td><td>890</td></tr>
+                    <tr><td>2022</td><td>2880</td><td>79.5%</td><td>2800</td><td>950</td></tr>
+                    <tr><td>2023</td><td>3080</td><td>84.6%</td><td>3000</td><td>1020</td></tr>
+                    <tr><td>2024</td><td>3280</td><td>89.2%</td><td>3200</td><td>1080</td></tr>
+                    <tr><td>2025</td><td>3580</td><td>92.5%</td><td>3450</td><td>1150</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <script>
-        // 切换标签页功能
-        function switchTab(tabName) {
-            // 隐藏所有标签内容
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // 移除所有标签的活动状态
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // 显示选中的标签内容
-            document.getElementById(tabName).classList.add('active');
-            
-            // 设置选中的标签为活动状态
-            event.currentTarget.classList.add('active');
+        // 时间更新
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('datetime').textContent = 
+                now.toLocaleDateString('zh-CN', {year:'numeric',month:'2-digit',day:'2-digit'}) + ' ' +
+                now.toLocaleTimeString('zh-CN', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
         }
-        
-        // 初始化图表
-        document.addEventListener('DOMContentLoaded', function() {
-            // 发电量图表
-            const years = ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
-            const electricityData = [2150, 2350, 2550, 2750, 2950, 3050, 3150, 3250, 3320, 3380, 3420];
-            
-            // 创建渐变颜色
-            const createGradient = (ctx, area) => {
-                const gradient = ctx.createLinearGradient(0, area.bottom, 0, area.top);
-                gradient.addColorStop(0, 'rgba(26, 95, 180, 0.7)');
-                gradient.addColorStop(0.7, 'rgba(26, 95, 180, 0.9)');
-                gradient.addColorStop(1, 'rgba(41, 128, 185, 1)');
-                return gradient;
-            };
-            
-            const electricityCtx = document.getElementById('electricityChart').getContext('2d');
-            const electricityChart = new Chart(electricityCtx, {
-                type: 'bar',
-                data: {
-                    labels: years,
-                    datasets: [{
-                        label: '发电量 (亿千瓦时)',
-                        data: electricityData,
-                        backgroundColor: function(context) {
-                            const chart = context.chart;
-                            const {ctx, chartArea} = chart;
-                            if (!chartArea) return null;
-                            return createGradient(ctx, chartArea);
-                        },
-                        borderColor: 'rgba(26, 95, 180, 1)',
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        hoverBackgroundColor: 'rgba(38, 162, 105, 0.8)',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                },
-                                padding: 20,
-                                color: '#1a5fb4'
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(26, 95, 180, 0.9)',
-                            titleFont: {
-                                size: 14,
-                                weight: 'bold'
-                            },
-                            bodyFont: {
-                                size: 14
-                            },
-                            padding: 12,
-                            cornerRadius: 6,
-                            displayColors: false,
-                            callbacks: {
-                                label: function(context) {
-                                    return `发电量: ${context.parsed.y} 亿千瓦时`;
-                                },
-                                afterLabel: function(context) {
-                                    const yearIndex = context.dataIndex;
-                                    const year = years[yearIndex];
-                                    const growth = yearIndex > 0 ? 
-                                        `同比增长: ${((electricityData[yearIndex] - electricityData[yearIndex-1]) / electricityData[yearIndex-1] * 100).toFixed(1)}%` : 
-                                        '基准年份';
-                                    return growth;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: '发电量 (亿千瓦时)',
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                },
-                                color: '#1a5fb4',
-                                padding: {top: 10, bottom: 20}
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            },
-                            ticks: {
-                                font: {
-                                    size: 12
-                                },
-                                color: '#5d7b9c'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: '年份',
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                },
-                                color: '#1a5fb4',
-                                padding: {top: 20, bottom: 10}
-                            },
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                font: {
-                                    size: 12
-                                },
-                                color: '#5d7b9c'
-                            }
-                        }
-                    },
-                    animation: {
-                        duration: 1500,
-                        easing: 'easeOutQuart'
-                    }
-                }
-            });
-            
-            // 用户规模与普及率图表
-            const userCtx = document.getElementById('userChart').getContext('2d');
-            const userChart = new Chart(userCtx, {
-                type: 'line',
-                data: {
-                    labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-                    datasets: [
-                        {
-                            label: '网民规模(万人)',
-                            data: [1520, 1680, 1850, 2020, 2200, 2450, 2680, 2880, 3080, 3280, 3580],
-                            borderColor: '#1e5799',
-                            backgroundColor: 'rgba(30, 87, 153, 0.1)',
-                            borderWidth: 3,
-                            fill: true,
-                            tension: 0.3,
-                            yAxisID: 'y'
-                        },
-                        {
-                            label: '互联网普及率(%)',
-                            data: [43.2, 47.5, 52.1, 56.7, 61.5, 68.2, 74.3, 79.5, 84.6, 89.2, 92.5],
-                            borderColor: '#e74c3c',
-                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                            borderWidth: 3,
-                            fill: true,
-                            tension: 0.3,
-                            yAxisID: 'y1'
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: {
-                        mode: 'index',
-                        intersect: false,
-                    },
-                    scales: {
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                            title: {
-                                display: true,
-                                text: '网民规模(万人)'
-                            },
-                            min: 1000,
-                            max: 4000
-                        },
-                        y1: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                            title: {
-                                display: true,
-                                text: '普及率(%)'
-                            },
-                            min: 30,
-                            max: 100,
-                            grid: {
-                                drawOnChartArea: false,
-                            },
-                        }
-                    }
-                }
-            });
+        setInterval(updateTime, 1000);
+        updateTime();
 
-            // 移动互联网用户图表
-            const mobileCtx = document.getElementById('mobileChart').getContext('2d');
-            const mobileChart = new Chart(mobileCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-                    datasets: [
-                        {
-                            label: '移动互联网用户(万人)',
-                            data: [1320, 1520, 1720, 1920, 2120, 2380, 2600, 2800, 3000, 3200, 3450],
-                            backgroundColor: 'rgba(46, 204, 113, 0.7)',
-                            borderColor: 'rgba(46, 204, 113, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: '宽带接入用户(万户)',
-                            data: [480, 520, 580, 650, 720, 810, 890, 950, 1020, 1080, 1150],
-                            backgroundColor: 'rgba(155, 89, 182, 0.7)',
-                            borderColor: 'rgba(155, 89, 182, 1)',
-                            borderWidth: 1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: '用户数量'
-                            }
-                        }
-                    }
+        // 图表配置
+        const colors = {
+            blue: 'rgba(52,152,219,0.8)', green: 'rgba(46,204,113,0.8)', red: 'rgba(231,76,60,0.8)',
+            yellow: 'rgba(241,196,15,0.8)', purple: 'rgba(155,89,182,0.8)', orange: 'rgba(230,126,34,0.8)'
+        };
+
+        const commonOpts = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#ecf0f1', font: { size: 12 } } },
+                datalabels: { display: false }
+            },
+            scales: {
+                x: { ticks: { color: '#95a5a6' }, grid: { color: 'rgba(52,152,219,0.1)' } },
+                y: { ticks: { color: '#95a5a6' }, grid: { color: 'rgba(52,152,219,0.1)' } }
+            }
+        };
+
+        // 图表1: 发电量
+        new Chart(document.getElementById('chart1'), {
+            type: 'bar',
+            data: {
+                labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                datasets: [{
+                    label: '发电量(亿千瓦时)',
+                    data: [2150, 2350, 2550, 2750, 2950, 3050, 3150, 3250, 3320, 3380, 3420],
+                    backgroundColor: colors.blue,
+                    borderWidth: 1
+                }]
+            },
+            options: commonOpts
+        });
+
+        // 图表2: 网民规模与普及率
+        new Chart(document.getElementById('chart2'), {
+            type: 'line',
+            data: {
+                labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                datasets: [
+                    { label: '网民规模(万人)', data: [1520, 1680, 1850, 2020, 2200, 2450, 2680, 2880, 3080, 3280, 3580], 
+                      borderColor: colors.blue, backgroundColor: 'rgba(52,152,219,0.2)', borderWidth: 3, fill: true, tension: 0.4, yAxisID: 'y' },
+                    { label: '互联网普及率(%)', data: [43.2, 47.5, 52.1, 56.7, 61.5, 68.2, 74.3, 79.5, 84.6, 89.2, 92.5],
+                      borderColor: colors.red, backgroundColor: 'rgba(231,76,60,0.2)', borderWidth: 3, fill: true, tension: 0.4, yAxisID: 'y1' }
+                ]
+            },
+            options: {
+                ...commonOpts,
+                scales: {
+                    ...commonOpts.scales,
+                    y: { ...commonOpts.scales.y, position: 'left', title: { display: true, text: '网民规模(万人)', color: '#95a5a6' } },
+                    y1: { type: 'linear', position: 'right', ticks: { color: '#95a5a6' }, grid: { drawOnChartArea: false }, title: { display: true, text: '普及率(%)', color: '#95a5a6' } }
                 }
-            });
-            
-            // GDP增长趋势图
-            const gdpCtx = document.getElementById('gdpChart').getContext('2d');
-            const gdpChart = new Chart(gdpCtx, {
-                type: 'line',
-                data: {
-                    labels: ['2015', '2017', '2019', '2021', '2023', '2025'],
-                    datasets: [{
-                        label: '全省GDP(亿元)',
-                        data: [10502, 13540, 16769, 19586, 22450, 25800],
-                        borderColor: '#3498db',
-                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            title: {
-                                display: true,
-                                text: 'GDP(亿元)'
-                            }
-                        }
-                    }
+            }
+        });
+
+        // 图表3: 移动互联网用户
+        new Chart(document.getElementById('chart3'), {
+            type: 'bar',
+            data: {
+                labels: ['2015', '2017', '2019', '2021', '2023', '2025'],
+                datasets: [
+                    { label: '移动互联网用户(万人)', data: [1320, 1720, 2120, 2600, 3000, 3450], backgroundColor: colors.green },
+                    { label: '宽带接入用户(万户)', data: [480, 580, 720, 890, 1020, 1150], backgroundColor: colors.purple }
+                ]
+            },
+            options: commonOpts
+        });
+
+        // 图表4: GDP增长
+        new Chart(document.getElementById('chart4'), {
+            type: 'line',
+            data: {
+                labels: ['2015', '2017', '2019', '2021', '2023', '2025'],
+                datasets: [
+                    { label: '全省GDP(亿元)', data: [10502, 13540, 16769, 19586, 22450, 25800], 
+                      borderColor: colors.blue, backgroundColor: 'rgba(52,152,219,0.2)', borderWidth: 3, fill: true, tension: 0.4, yAxisID: 'y' },
+                    { label: '区域协同指数', data: [0.65, 0.68, 0.72, 0.76, 0.80, 0.85], 
+                      borderColor: colors.orange, backgroundColor: 'rgba(230,126,34,0.2)', borderWidth: 3, fill: true, tension: 0.4, yAxisID: 'y1' }
+                ]
+            },
+            options: {
+                ...commonOpts,
+                scales: {
+                    ...commonOpts.scales,
+                    y: { ...commonOpts.scales.y, title: { display: true, text: 'GDP(亿元)', color: '#95a5a6' } },
+                    y1: { type: 'linear', position: 'right', max: 1, ticks: { color: '#95a5a6' }, grid: { drawOnChartArea: false }, title: { display: true, text: '协同指数', color: '#95a5a6' } }
                 }
-            });
-            
-            // 区域协同指数图
-            const coordinationCtx = document.getElementById('coordinationChart').getContext('2d');
-            const coordinationChart = new Chart(coordinationCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['2015', '2017', '2019', '2021', '2023', '2025'],
-                    datasets: [{
-                        label: '区域协同指数',
-                        data: [0.65, 0.68, 0.72, 0.76, 0.80, 0.85],
-                        backgroundColor: '#27ae60',
-                        borderColor: '#219652',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 1,
-                            title: {
-                                display: true,
-                                text: '协同指数'
-                            }
-                        }
-                    }
-                }
-            });
+            }
         });
     </script>
 </body>
