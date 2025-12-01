@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>贵州省综合数据展示</title>
+    <title>智算能力提升行动</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/slideshow.css">
     <script src="../js/vendor/chart.min.js" defer></script>
@@ -17,7 +17,7 @@
         </a>
         <ul>
             <li><a href="../index.html" class="nav-link">首页</a></li>
-            <li><a href="./zhesj.html" class="nav-link">智算能力提升行动</a></li>
+            <li><a href="./zhesj.html" class="nav-link active">智算能力提升行动</a></li>
             <li><a href="./sjjs.html" class="nav-link">数据资源建设行动</a></li>
             <li><a href="./dmx.html" class="nav-link">行业大模型发展行动</a></li>
             <li><a href="./zhinengzongduan.html" class="nav-link">智能智能产业培育行动</a></li>
@@ -30,609 +30,527 @@
     <header>
         <div class="container">
             <h1>智算能力提升行动</h1>
-            <p>2015-2025年发电量、网络发展与区域协同情况分析</p>
+            <p>构建全国领先的智能计算高地 · 服务数字经济基础设施</p>
         </div>
     </header>
     
     <div class="container">
         <section class="intro">
-            <h2>贵州“东数西算”概况</h2>
-            <p>早在2013年,当数据中心还没有成为“热词”,贵阳贵安就已落子布局。中国电信云计算贵州信息园项目率先在贵安新区开工建设;中国联通(贵安)云计算基地和中国移动(贵州)数据中心相继开工,揭开了贵阳贵安数据中心建设的大幕。截至2023年5月,作为贵州大数据发展和科技创新的重要展示平台——贵阳大数据科创城已招引的487家企业中,大数据企业占比达到65%,新基建、数据要素、数字阅读等新赛道优质企业更是竞相注册。</p>
+            <h2>行动概述与核心目标</h2>
+            <p>贵州省"智算能力提升行动"是《贵州省推动人工智能高质量发展行动方案（2025—2027年）》的核心组成部分，旨在将贵州建设成为全国领先的智能计算高地。该行动基于贵州省作为全国一体化算力网络国家枢纽节点的定位，充分利用当地气候凉爽、能源丰富、地质稳定等自然优势，构建服务于全国的数字经济基础设施。</p>
         </section>
         
         <div class="tabs">
-            <button class="tab active" onclick="switchTab('electricity')">发电量</button>
-            <button class="tab" onclick="switchTab('network')">网络发展</button>
-            <button class="tab" onclick="switchTab('regional')">区域协同发展</button>
+            <button class="tab active" onclick="switchTab('overview')">发展规划</button>
+            <button class="tab" onclick="switchTab('infrastructure')">基础设施</button>
+            <button class="tab" onclick="switchTab('network')">网络能力</button>
+            <button class="tab" onclick="switchTab('application')">行业应用</button>
+            <button class="tab" onclick="switchTab('economy')">经济效益</button>
         </div>
         
-        <!-- 发电量 -->
-        <section id="electricity" class="tab-content active electricity">
-            <h2>发电量统计</h2>
+        <!-- 发展规划 -->
+        <section id="overview" class="tab-content active electricity">
+            <h2>三年发展目标规划</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>2027年算力规模</h3>
+                    <div class="stat-value">210 Eflops</div>
+                    <p class="stat-desc">较2025年增长40%</p>
+                </div>
+                <div class="stat-card">
+                    <h3>累计数据集</h3>
+                    <div class="stat-value">50个+</div>
+                    <p class="stat-desc">高质量行业数据集</p>
+                </div>
+                <div class="stat-card">
+                    <h3>应用行业</h3>
+                    <div class="stat-value">12个+</div>
+                    <p class="stat-desc">大模型深度应用</p>
+                </div>
+                <div class="stat-card">
+                    <h3>应用场景</h3>
+                    <div class="stat-value">500个+</div>
+                    <p class="stat-desc">累计大模型场景</p>
+                </div>
+            </div>
             
             <div class="card">
-                <h3>贵州省十年发电量统计</h3>
+                <h3>2025-2027年算力规模增长趋势</h3>
                 <div class="chart-container">
-                    <canvas id="electricityChart"></canvas>
-                </div>
-            </div>
-            
-            <div class="features">
-                <div class="feature">
-                    <h3>水电资源丰富</h3>
-                    <p>贵州省水资源丰富，乌江、南盘江、北盘江、清水江、赤水河上，这四江一河的水位落差集中的河段多，开发条件优越，水能蕴藏量和可开发容量占全省的80%，且水能资源有分布均、造价低、发力高、区位优等特点。</p>
-                </div>
-                <div class="feature">
-                    <h3>火电稳定供应</h3>
-                    <p>依托丰富煤炭资源，火电在能源结构中占据重要地位，保障稳定供电</p>
-                </div>
-                <div class="feature">
-                    <h3>新能源快速发展</h3>
-                    <p>今年截至9月,贵州能源集团绿色电力新增装机77万千瓦,发电量11.8亿千瓦时,同比增长349.28%,营业总收入4.15亿元、同比增加3.06亿元。2022年底组建至今新增电力装机357万千瓦、增长119.8%,其中光伏增长537.5%;新能源装机173万千瓦以上,绿电装机比例从8.05%提高到26.41%。</p>
-                </div>
-                <div class="feature">
-                    <h3>西电东送主力</h3>
-                    <p>思林水电站位于贵州省思南县境内，是贵州省重点工程项目和“西电东送”骨干工程，属于乌江干流梯级开发的第6级电站。电站装机容量105万千瓦，以发电为主，预计年发电量超40亿度，其次为航运，兼顾防洪、灌溉等。</p>
-                </div>
-            </div>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>平均年发电量</h3>
-                    <div class="stat-value">2,850 亿千瓦时</div>
-                </div>
-                <div class="stat-card">
-                    <h3>最高年发电量</h3>
-                    <div class="stat-value">3,420 亿千瓦时</div>
-                </div>
-                <div class="stat-card">
-                    <h3>2025年预测发电量</h3>
-                    <div class="stat-value">3,420 亿千瓦时</div>
-                </div>
-                <div class="stat-card">
-                    <h3>西电东送电量</h3>
-                    <div class="stat-value">1,650 亿千瓦时</div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 网络发展 -->
-        <section id="network" class="tab-content network">
-            <h2>网络发展数据</h2>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>2025年网民规模</h3>
-                    <div class="stat-value">3580万</div>
-                    <p class="stat-desc">预计到2025年，贵州省网民规模将达到3580万人，较2015年增长超过200%。</p>
-                </div>
-                
-                <div class="stat-card">
-                    <h3>2025年互联网普及率</h3>
-                    <div class="stat-value">92.5%</div>
-                    <p class="stat-desc">预计到2025年，贵州省互联网普及率将达92.5%，接近全国领先水平。</p>
-                </div>
-                
-                <div class="stat-card">
-                    <h3>移动互联网用户</h3>
-                    <div class="stat-value">3450万</div>
-                    <p class="stat-desc">预计到2025年，贵州省移动互联网用户将达到3450万，占网民总数的96%以上。</p>
+                    <canvas id="computePowerChart"></canvas>
                 </div>
             </div>
             
             <div class="data-section">
                 <div class="card">
-                    <h3>贵州省网民规模与互联网普及率</h3>
+                    <h3>投资额与产业规模发展</h3>
                     <div class="chart-container">
-                        <canvas id="userChart"></canvas>
+                        <canvas id="investmentChart"></canvas>
                     </div>
                 </div>
                 
                 <div class="card">
-                    <h3>贵州省移动互联网用户发展情况</h3>
+                    <h3>数据集与应用场景增长</h3>
                     <div class="chart-container">
-                        <canvas id="mobileChart"></canvas>
+                        <canvas id="datasetChart"></canvas>
                     </div>
                 </div>
             </div>
             
             <div class="card">
-                <h3>贵州省网络发展数据表格</h3>
+                <h3>贵州省2025-2027年智算能力发展规划表</h3>
                 <table>
                     <thead>
                         <tr>
-                            <th>年份</th>
-                            <th>网民规模(万人)</th>
-                            <th>互联网普及率</th>
-                            <th>移动互联网用户(万人)</th>
-                            <th>宽带接入用户(万户)</th>
+                            <th>发展指标</th>
+                            <th>2025年目标</th>
+                            <th>2026年目标</th>
+                            <th>2027年目标</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>2015</td>
-                            <td>1520</td>
-                            <td>43.2%</td>
-                            <td>1320</td>
-                            <td>480</td>
+                            <td>算力规模</td>
+                            <td>150 Eflops</td>
+                            <td>180 Eflops</td>
+                            <td>210 Eflops</td>
                         </tr>
                         <tr>
-                            <td>2016</td>
-                            <td>1680</td>
-                            <td>47.5%</td>
-                            <td>1520</td>
-                            <td>520</td>
+                            <td>高质量数据集</td>
+                            <td>10个以上</td>
+                            <td>累计30个以上</td>
+                            <td>累计50个以上</td>
                         </tr>
                         <tr>
-                            <td>2017</td>
-                            <td>1850</td>
-                            <td>52.1%</td>
-                            <td>1720</td>
-                            <td>580</td>
+                            <td>应用行业</td>
+                            <td>5个以上</td>
+                            <td>8个以上</td>
+                            <td>12个以上</td>
                         </tr>
                         <tr>
-                            <td>2018</td>
-                            <td>2020</td>
-                            <td>56.7%</td>
-                            <td>1920</td>
-                            <td>650</td>
+                            <td>大模型应用场景</td>
+                            <td>100个以上</td>
+                            <td>200个以上</td>
+                            <td>500个以上</td>
                         </tr>
                         <tr>
-                            <td>2019</td>
-                            <td>2200</td>
-                            <td>61.5%</td>
-                            <td>2120</td>
-                            <td>720</td>
+                            <td>年度投资额</td>
+                            <td>130亿元</td>
+                            <td>150亿元</td>
+                            <td>180亿元</td>
                         </tr>
                         <tr>
-                            <td>2020</td>
-                            <td>2450</td>
-                            <td>68.2%</td>
-                            <td>2380</td>
-                            <td>810</td>
-                        </tr>
-                        <tr>
-                            <td>2021</td>
-                            <td>2680</td>
-                            <td>74.3%</td>
-                            <td>2600</td>
-                            <td>890</td>
-                        </tr>
-                        <tr>
-                            <td>2022</td>
-                            <td>2880</td>
-                            <td>79.5%</td>
-                            <td>2800</td>
-                            <td>950</td>
-                        </tr>
-                        <tr>
-                            <td>2023</td>
-                            <td>3080</td>
-                            <td>84.6%</td>
-                            <td>3000</td>
-                            <td>1020</td>
-                        </tr>
-                        <tr>
-                            <td>2024</td>
-                            <td>3280</td>
-                            <td>89.2%</td>
-                            <td>3200</td>
-                            <td>1080</td>
-                        </tr>
-                        <tr>
-                            <td>2025</td>
-                            <td>3580</td>
-                            <td>92.5%</td>
-                            <td>3450</td>
-                            <td>1150</td>
+                            <td>人工智能核心产业规模</td>
+                            <td>240亿元</td>
+                            <td>290亿元</td>
+                            <td>350亿元</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
         
-        <!-- 区域协同发展 -->
-        <section id="regional" class="tab-content regional">
-            <h2>区域协同发展</h2>
+        <!-- 基础设施 -->
+        <section id="infrastructure" class="tab-content network">
+            <h2>算力基础设施建设现状</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>现有算力规模</h3>
+                    <div class="stat-value">85 Eflops</div>
+                    <p class="stat-desc">截至2025年8月，智算占比>98%</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>数据中心</h3>
+                    <div class="stat-value">48个</div>
+                    <p class="stat-desc">在建和投运重点数据中心</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>国产化率</h3>
+                    <div class="stat-value">&gt; 80%</div>
+                    <p class="stat-desc">国产算力芯片占比</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>贵安集聚</h3>
+                    <div class="stat-value">23个</div>
+                    <p class="stat-desc">大型及以上数据中心</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>算力规模快速增长趋势</h3>
+                <div class="chart-container">
+                    <canvas id="currentPowerChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>主要智算中心分布与特点</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>智算中心名称</th>
+                            <th>核心特点</th>
+                            <th>算力规模</th>
+                            <th>服务范围</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>贵安超级计算中心</td>
+                            <td>面向科研计算和影视渲染</td>
+                            <td>30PFLOPS峰值</td>
+                            <td>全国，服务3000次以上科研计算</td>
+                        </tr>
+                        <tr>
+                            <td>华为云贵安智算中心</td>
+                            <td>基于昇腾芯片的国产算力</td>
+                            <td>11万片NPU，目标150EFLOPS</td>
+                            <td>全球华为云客户</td>
+                        </tr>
+                        <tr>
+                            <td>中国电信云计算贵州信息园</td>
+                            <td>电信级云服务基础设施</td>
+                            <td>4500架机架</td>
+                            <td>政府、金融、互联网等行业</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>贵安超级计算中心</h3>
+                    <p>现有服务器等硬件设备715台，核心算力由1200张高性能图形处理器提供，算力峰值达到30PFLOPS以上，累计输送算力约2800万卡时，主要服务科研计算和影视渲染</p>
+                </div>
+                <div class="feature">
+                    <h3>华为云贵安智算中心</h3>
+                    <p>至2024年10月底部署超过11万片昇腾NPU，华为云公司超过80%的新增昇腾智算卡部署在此，力争到2025年累计算力规模超过150EFLOPS，打造华为云全球最大智算中心</p>
+                </div>
+                <div class="feature">
+                    <h3>中国电信云计算贵州信息园</h3>
+                    <p>新增3座机楼，规划建设的4500架机架自2025年二季度起陆续交付投用，提供电信级云服务基础设施，服务政府、金融、互联网等行业</p>
+                </div>
+                <div class="feature">
+                    <h3>集聚效应显著</h3>
+                    <p>贵阳贵安集聚大型及以上数据中心23个，成为全球超大型数据中心集聚度最高的地区之一，形成了强大的算力供给能力和产业生态</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 网络能力 -->
+        <section id="network" class="tab-content regional">
+            <h2>网络能力与连接性能</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>出省带宽</h3>
+                    <div class="stat-value">&gt; 6万 Gbps</div>
+                    <p class="stat-desc">直连全国42个主要城市</p>
+                </div>
+                <div class="stat-card">
+                    <h3>高速通道</h3>
+                    <div class="stat-value">400G</div>
+                    <p class="stat-desc">全球首条400G算力通道</p>
+                </div>
+                <div class="stat-card">
+                    <h3>集群内时延</h3>
+                    <div class="stat-value">&lt; 3ms</div>
+                    <p class="stat-desc">集群内单向网络时延</p>
+                </div>
+                <div class="stat-card">
+                    <h3>全国时延圈</h3>
+                    <div class="stat-value">3/10/20ms</div>
+                    <p class="stat-desc">三层时延保障圈</p>
+                </div>
+            </div>
+            
             <div class="data-section">
                 <div class="card">
-                    <h3>GDP增长趋势</h3>
+                    <h3>三层时延保障圈覆盖</h3>
+                    <div class="chart-container">
+                        <canvas id="networkChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>主要城市网络时延对比</h3>
+                    <div class="chart-container">
+                        <canvas id="latencyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>算力调度平台"大衍"核心能力</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>核心能力</th>
+                            <th>功能描述</th>
+                            <th>应用效果</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>算力标识和算力度量</td>
+                            <td>统一算力资源标识和度量标准</td>
+                            <td>实现算力资源的标准化管理</td>
+                        </tr>
+                        <tr>
+                            <td>算力并网和异构资源调度</td>
+                            <td>整合不同类型算力资源</td>
+                            <td>提升资源利用效率</td>
+                        </tr>
+                        <tr>
+                            <td>可视化编排调度</td>
+                            <td>直观的任务编排和资源调度</td>
+                            <td>降低使用门槛</td>
+                        </tr>
+                        <tr>
+                            <td>智能任务分发</td>
+                            <td>AI驱动的任务智能分配</td>
+                            <td>优化资源配置</td>
+                        </tr>
+                        <tr>
+                            <td>算力券应用</td>
+                            <td>政策激励机制实施</td>
+                            <td>促进算力交易逾140亿元</td>
+                        </tr>
+                        <tr>
+                            <td>算力商城应用</td>
+                            <td>102项算力产品在线交易</td>
+                            <td>2024年交易额达113.51亿元</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>算力调度平台成效</h3>
+                    <p>贵州大数据集团自主研发的"大衍"算力调度平台已汇聚33个算力服务商、496个算力需求方，可对外提供102项算力产品。截至2024年底，平台完成算力交易突破100亿元大关</p>
+                </div>
+                <div class="feature">
+                    <h3>算力券创新政策</h3>
+                    <p>截至2025年6月底，共发放算力券333张，促进算力交易逾140亿元。将国产化算力适配服务、模型训练服务纳入激励范围，显著提升算力资源普惠性</p>
+                </div>
+                <div class="feature">
+                    <h3>网络性能优势</h3>
+                    <p>从贵阳到广州的数据传输仅需10ms，到杭州也只需16ms，远快于人类眨眼一次所需的100-400ms，确保算力服务能够高效覆盖全国主要经济区域</p>
+                </div>
+                <div class="feature">
+                    <h3>全国互联互通</h3>
+                    <p>建成全球首条400G算力通道，开通贵阳至深圳间弹性带宽通道，出省带宽超过6万Gbps，直连全国42个主要城市，构建高速算力网络</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 行业应用 -->
+        <section id="application" class="tab-content network">
+            <h2>行业应用与赋能成效</h2>
+            
+            <div class="card">
+                <h3>重点行业大模型应用分布</h3>
+                <div class="chart-container">
+                    <canvas id="industryChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="data-section">
+                <div class="card">
+                    <h3>影视渲染服务作品数量</h3>
+                    <div class="chart-container">
+                        <canvas id="movieChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>数据交易市场增长</h3>
+                    <div class="chart-container">
+                        <canvas id="dataMarketChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>影视渲染</h3>
+                    <div class="stat-value">150+ 部</div>
+                    <p class="stat-desc">《哪吒2》40%特效由贵州算力支持</p>
+                </div>
+                <div class="stat-card">
+                    <h3>遵义铝业</h3>
+                    <div class="stat-value">7000万度</div>
+                    <p class="stat-desc">AI大模型年节约电量，省4000万元</p>
+                </div>
+                <div class="stat-card">
+                    <h3>贵州轮胎</h3>
+                    <div class="stat-value">2秒检测</div>
+                    <p class="stat-desc">AI判片系统，质量问题减少57%</p>
+                </div>
+                <div class="stat-card">
+                    <h3>数据交易</h3>
+                    <div class="stat-value">55亿+</div>
+                    <p class="stat-desc">贵阳大数据交易所累计交易额</p>
+                </div>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>影视文创产业</h3>
+                    <p>贵州算力已为《哪吒之魔童闹海》、《流浪地球2》、《长津湖之水门桥》、《三体》等150多部影片提供算力服务，其中《哪吒2》40%的特效渲染算力由贵州算力保障支持</p>
+                </div>
+                <div class="feature">
+                    <h3>工业智能化转型</h3>
+                    <p>遵义铝业电解铝复杂体系动态优化预测大模型，每年可为企业省下约7000万度电，直接节约电费近4000万元。贵州轮胎智能化生产助力产品质量问题减少57%、库存水平降低34%</p>
+                </div>
+                <div class="feature">
+                    <h3>文旅大模型应用</h3>
+                    <p>基于贵州旅游大模型打造的"黄小西"AI智能体已完成智能行程规划、智能产品订购2个核心应用场景建设，正提速开发4个应用场景，与"一码游贵州"等旅游平台嵌入互联</p>
+                </div>
+                <div class="feature">
+                    <h3>数据要素市场</h3>
+                    <p>贵阳大数据交易所已集聚经营主体1100余家、交易总额超55亿元。截至2025年上半年，已聚集46家生态伙伴，发布939个高质量数据集，交易周期较传统模式缩短60%以上</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 经济效益 -->
+        <section id="economy" class="tab-content regional">
+            <h2>投资与经济效益分析</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>2027年投资额</h3>
+                    <div class="stat-value">180亿元</div>
+                    <p class="stat-desc">智算领域年度投资目标</p>
+                </div>
+                <div class="stat-card">
+                    <h3>算力产业规模</h3>
+                    <div class="stat-value">170亿元</div>
+                    <p class="stat-desc">2027年产业规模目标</p>
+                </div>
+                <div class="stat-card">
+                    <h3>软件服务业</h3>
+                    <div class="stat-value">1000亿+</div>
+                    <p class="stat-desc">2024年软件和信息技术服务业收入</p>
+                </div>
+                <div class="stat-card">
+                    <h3>电子制造业</h3>
+                    <div class="stat-value">+25.3%</div>
+                    <p class="stat-desc">2024年电子产品制造业增加值增速</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>2025-2027年投资与产业规模趋势</h3>
+                <div class="chart-container">
+                    <canvas id="economyChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="data-section">
+                <div class="card">
+                    <h3>数字经济占GDP比重</h3>
                     <div class="chart-container">
                         <canvas id="gdpChart"></canvas>
                     </div>
                 </div>
                 
                 <div class="card">
-                    <h3>区域协同指数</h3>
+                    <h3>算力交易额增长</h3>
                     <div class="chart-container">
-                        <canvas id="coordinationChart"></canvas>
+                        <canvas id="transactionChart"></canvas>
                     </div>
                 </div>
             </div>
             
             <div class="card">
-                <h3>关键发展指标</h3>
+                <h3>经济效益关键指标</h3>
                 <table>
                     <thead>
                         <tr>
-                            <th>年份</th>
-                            <th>全省GDP(亿元)</th>
-                            <th>区域协同指数</th>
-                            <th>城镇化率(%)</th>
-                            <th>城乡居民收入比</th>
+                            <th>指标类别</th>
+                            <th>2024年实际</th>
+                            <th>2025年目标</th>
+                            <th>2027年目标</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>2015</td>
-                            <td>10,502</td>
-                            <td>0.65</td>
-                            <td>42.0</td>
-                            <td>3.07</td>
+                            <td>软件和信息技术服务业收入</td>
+                            <td>突破1000亿元</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                         <tr>
-                            <td>2017</td>
-                            <td>13,540</td>
-                            <td>0.68</td>
-                            <td>46.0</td>
-                            <td>2.95</td>
+                            <td>电子产品制造业增加值增速</td>
+                            <td>+25.3%</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                         <tr>
-                            <td>2019</td>
-                            <td>16,769</td>
-                            <td>0.72</td>
-                            <td>49.0</td>
-                            <td>2.83</td>
+                            <td>信息传输、软件和信息技术服务业增加值增速</td>
+                            <td>+11.5%</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                         <tr>
-                            <td>2021</td>
-                            <td>19,586</td>
-                            <td>0.76</td>
-                            <td>52.5</td>
-                            <td>2.71</td>
+                            <td>智算领域年度投资额</td>
+                            <td>-</td>
+                            <td>130亿元</td>
+                            <td>180亿元</td>
                         </tr>
                         <tr>
-                            <td>2023</td>
-                            <td>22,450</td>
-                            <td>0.80</td>
-                            <td>55.8</td>
-                            <td>2.58</td>
+                            <td>算力产业规模</td>
+                            <td>-</td>
+                            <td>120亿元</td>
+                            <td>170亿元</td>
                         </tr>
                         <tr>
-                            <td>2025</td>
-                            <td>25,800</td>
-                            <td>0.85</td>
-                            <td>60.0</td>
-                            <td>2.45</td>
+                            <td>算力交易额</td>
+                            <td>113.51亿元</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>持续投资增长</h3>
+                    <p>按照规划，贵州智算领域投资持续增长：2025年达130亿元，2026年达150亿元，2027年突破180亿元，为智算能力提升提供强大资金保障</p>
+                </div>
+                <div class="feature">
+                    <h3>产业规模扩大</h3>
+                    <p>算力产业规模从2025年的120亿元增长到2027年的170亿元，年均增长率超过15%，带动相关产业链协同发展</p>
+                </div>
+                <div class="feature">
+                    <h3>数字经济领先</h3>
+                    <p>2024年，贵州软件和信息技术服务业收入突破1000亿元，电子产品制造业增加值增长25.3%，全省数字经济增速连续9年位居全国前列</p>
+                </div>
+                <div class="feature">
+                    <h3>综合效益显著</h3>
+                    <p>信息传输、软件和信息技术服务业增加值增长11.5%，占地区生产总值的比重为2.7%，比上年提高0.2个百分点，数字经济对经济增长的贡献持续提升</p>
+                </div>
             </div>
         </section>
     </div>
     
     <footer>
         <div class="container">
-            <p>贵州省综合数据展示 &copy; 2023</p>
-            <p>数据来源：贵州省统计局、贵州省发展和改革委员会、贵州省通信管理局、贵州省能源局</p>
-            <p>注：2024-2025年数据为预测值</p>
+            <p>贵州省智算能力提升行动展示 &copy; 2025</p>
+            <p>数据来源：贵州省大数据发展管理局、贵州省推动人工智能高质量发展行动方案（2025—2027年）</p>
+            <p>注：贵州智算能力提升行动为全国数字经济发展提供坚实算力保障</p>
         </div>
     </footer>
 
-    <script>
-        // 切换标签页功能
-        function switchTab(tabName) {
-            // 隐藏所有标签内容
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // 移除所有标签的活动状态
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // 显示选中的标签内容
-            document.getElementById(tabName).classList.add('active');
-            
-            // 设置选中的标签为活动状态
-            event.currentTarget.classList.add('active');
-        }
-        
-        // 初始化图表
-        document.addEventListener('DOMContentLoaded', function() {
-            // 发电量图表
-            const years = ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
-            const electricityData = [2150, 2350, 2550, 2750, 2950, 3050, 3150, 3250, 3320, 3380, 3420];
-            
-            // 创建渐变颜色
-            const createGradient = (ctx, area) => {
-                const gradient = ctx.createLinearGradient(0, area.bottom, 0, area.top);
-                gradient.addColorStop(0, 'rgba(26, 95, 180, 0.7)');
-                gradient.addColorStop(0.7, 'rgba(26, 95, 180, 0.9)');
-                gradient.addColorStop(1, 'rgba(41, 128, 185, 1)');
-                return gradient;
-            };
-            
-            const electricityCtx = document.getElementById('electricityChart').getContext('2d');
-            const electricityChart = new Chart(electricityCtx, {
-                type: 'bar',
-                data: {
-                    labels: years,
-                    datasets: [{
-                        label: '发电量 (亿千瓦时)',
-                        data: electricityData,
-                        backgroundColor: function(context) {
-                            const chart = context.chart;
-                            const {ctx, chartArea} = chart;
-                            if (!chartArea) return null;
-                            return createGradient(ctx, chartArea);
-                        },
-                        borderColor: 'rgba(26, 95, 180, 1)',
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        hoverBackgroundColor: 'rgba(38, 162, 105, 0.8)',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                },
-                                padding: 20,
-                                color: '#1a5fb4'
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(26, 95, 180, 0.9)',
-                            titleFont: {
-                                size: 14,
-                                weight: 'bold'
-                            },
-                            bodyFont: {
-                                size: 14
-                            },
-                            padding: 12,
-                            cornerRadius: 6,
-                            displayColors: false,
-                            callbacks: {
-                                label: function(context) {
-                                    return `发电量: ${context.parsed.y} 亿千瓦时`;
-                                },
-                                afterLabel: function(context) {
-                                    const yearIndex = context.dataIndex;
-                                    const year = years[yearIndex];
-                                    const growth = yearIndex > 0 ? 
-                                        `同比增长: ${((electricityData[yearIndex] - electricityData[yearIndex-1]) / electricityData[yearIndex-1] * 100).toFixed(1)}%` : 
-                                        '基准年份';
-                                    return growth;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: '发电量 (亿千瓦时)',
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                },
-                                color: '#1a5fb4',
-                                padding: {top: 10, bottom: 20}
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            },
-                            ticks: {
-                                font: {
-                                    size: 12
-                                },
-                                color: '#5d7b9c'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: '年份',
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                },
-                                color: '#1a5fb4',
-                                padding: {top: 20, bottom: 10}
-                            },
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                font: {
-                                    size: 12
-                                },
-                                color: '#5d7b9c'
-                            }
-                        }
-                    },
-                    animation: {
-                        duration: 1500,
-                        easing: 'easeOutQuart'
-                    }
-                }
-            });
-            
-            // 用户规模与普及率图表
-            const userCtx = document.getElementById('userChart').getContext('2d');
-            const userChart = new Chart(userCtx, {
-                type: 'line',
-                data: {
-                    labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-                    datasets: [
-                        {
-                            label: '网民规模(万人)',
-                            data: [1520, 1680, 1850, 2020, 2200, 2450, 2680, 2880, 3080, 3280, 3580],
-                            borderColor: '#1e5799',
-                            backgroundColor: 'rgba(30, 87, 153, 0.1)',
-                            borderWidth: 3,
-                            fill: true,
-                            tension: 0.3,
-                            yAxisID: 'y'
-                        },
-                        {
-                            label: '互联网普及率(%)',
-                            data: [43.2, 47.5, 52.1, 56.7, 61.5, 68.2, 74.3, 79.5, 84.6, 89.2, 92.5],
-                            borderColor: '#e74c3c',
-                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                            borderWidth: 3,
-                            fill: true,
-                            tension: 0.3,
-                            yAxisID: 'y1'
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: {
-                        mode: 'index',
-                        intersect: false,
-                    },
-                    scales: {
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                            title: {
-                                display: true,
-                                text: '网民规模(万人)'
-                            },
-                            min: 1000,
-                            max: 4000
-                        },
-                        y1: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                            title: {
-                                display: true,
-                                text: '普及率(%)'
-                            },
-                            min: 30,
-                            max: 100,
-                            grid: {
-                                drawOnChartArea: false,
-                            },
-                        }
-                    }
-                }
-            });
-
-            // 移动互联网用户图表
-            const mobileCtx = document.getElementById('mobileChart').getContext('2d');
-            const mobileChart = new Chart(mobileCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-                    datasets: [
-                        {
-                            label: '移动互联网用户(万人)',
-                            data: [1320, 1520, 1720, 1920, 2120, 2380, 2600, 2800, 3000, 3200, 3450],
-                            backgroundColor: 'rgba(46, 204, 113, 0.7)',
-                            borderColor: 'rgba(46, 204, 113, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: '宽带接入用户(万户)',
-                            data: [480, 520, 580, 650, 720, 810, 890, 950, 1020, 1080, 1150],
-                            backgroundColor: 'rgba(155, 89, 182, 0.7)',
-                            borderColor: 'rgba(155, 89, 182, 1)',
-                            borderWidth: 1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: '用户数量'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // GDP增长趋势图
-            const gdpCtx = document.getElementById('gdpChart').getContext('2d');
-            const gdpChart = new Chart(gdpCtx, {
-                type: 'line',
-                data: {
-                    labels: ['2015', '2017', '2019', '2021', '2023', '2025'],
-                    datasets: [{
-                        label: '全省GDP(亿元)',
-                        data: [10502, 13540, 16769, 19586, 22450, 25800],
-                        borderColor: '#3498db',
-                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            title: {
-                                display: true,
-                                text: 'GDP(亿元)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // 区域协同指数图
-            const coordinationCtx = document.getElementById('coordinationChart').getContext('2d');
-            const coordinationChart = new Chart(coordinationCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['2015', '2017', '2019', '2021', '2023', '2025'],
-                    datasets: [{
-                        label: '区域协同指数',
-                        data: [0.65, 0.68, 0.72, 0.76, 0.80, 0.85],
-                        backgroundColor: '#27ae60',
-                        borderColor: '#219652',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 1,
-                            title: {
-                                display: true,
-                                text: '协同指数'
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    </script>
+    <script src="../js/zhesj-charts.js"></script>
 </body>
 </html>
