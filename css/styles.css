@@ -4,6 +4,13 @@
           height: 40px; /* 统一品牌高度，可按需调整 */
           width: auto;
         }
+    /* 全局主题变量：便于统一调整配色，音乐控件使用以下变量适配主题 */
+    :root {
+      --accent-start: #1a6dfc;
+      --accent-end: #0d47a1;
+      --music-foreground: #ffffff;
+      --nav-bg: #e3fdfd;
+    }
     /* 导航栏样式（已从 indes.html 内联样式移出，页面将引用此文件） */
     .main-nav {
       background-color: #e3fdfd;
@@ -131,4 +138,37 @@
       background: #a0eee1; /* 与悬停色同步 */
       opacity: 1;
       height: 3px; /* 当前激活项更醒目 */
+    }
+    /* ===== 音乐悬浮控件样式（导航内右上角） ===== */
+    .music-player {
+      position: absolute;
+      right: 16px;
+      top: 12px;
+      display: flex;
+      align-items: center;
+      z-index: 1100;
+      pointer-events: auto;
+    }
+    .music-toggle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      background: linear-gradient(135deg, var(--accent-start), var(--accent-end)); /* 使用 CSS 变量适配主题 */
+      color: var(--music-foreground);
+      transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+      padding: 6px;
+    }
+    .music-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+    .music-toggle:active { transform: translateY(0); }
+    .music-toggle .icon { width: 18px; height: 18px; }
+    /* 小屏幕适配：减小控件并避免遮挡 */
+    @media screen and (max-width: 480px) {
+      .music-player { right: 10px; top: 8px; }
+      .music-toggle { width: 36px; height: 36px; }
     }

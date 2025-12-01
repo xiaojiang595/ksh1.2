@@ -16,6 +16,17 @@
         <a href="./index.html" class="nav-brand" aria-label="数据筑梦主页">
             <img src="image/logo.png" alt="数据筑梦" />
         </a>
+        <!-- 音乐控件（打开或重用独立播放器窗口，使音乐在页面之间持续播放） -->
+        <div class="music-player" aria-hidden="false">
+            <button id="musicToggle" class="music-toggle" aria-pressed="false" aria-label="播放背景音乐">
+                <svg class="icon play" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 3v18l15-9L5 3z" fill="currentColor" />
+                </svg>
+                <svg class="icon pause" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none">
+                    <path d="M6 4h4v16H6zM14 4h4v16h-4z" fill="currentColor" />
+                </svg>
+            </button>
+        </div>
         <ul>
             <li><a href="./index.html" class="nav-link">首页</a></li>
             <li><a href="./www/zhesj.html" class="nav-link">智算能力提升行动</a></li>
@@ -28,10 +39,10 @@
     </nav>
     <section class="welcome-screen">
         <div class="background-slideshow">
-            <div class="background-slide" style="background-image: url('image/zlts.png')"></div>
-            <div class="background-slide" style="background-image: url('image/b.png')"></div>
-            <div class="background-slide" style="background-image: url('image/c.png')"></div>
-            <div class="background-slide" style="background-image: url('image/d.png')"></div>
+            <div class="background-slide" style="background-image: url('image/a.jpg')"></div>
+            <div class="background-slide" style="background-image: url('image/b.jpg')"></div>
+            <div class="background-slide" style="background-image: url('image/c.jpg')"></div>
+            <div class="background-slide" style="background-image: url('image/d.jpg')"></div>
         </div>
     </section>
     <script>
@@ -88,6 +99,48 @@ navLinks.forEach(link => {
 
         setInterval(showFadeEffect, 5000); // 每5秒切换一次
         showFadeEffect(); // 初始化显示
+    </script>
+    <!-- 持久化隐藏音频，用于 PJAX 下持续播放 -->
+    <audio id="persistentAudio" src="/audio/One-Step-Further.mp3" loop preload="none" style="display:none"></audio>
+    <script src="./js/pjax.js"></script>
+    <script src="./js/music-control.js"></script>
+    <script>
+        // 页面层：把页面上的按钮与通用控制器 SiteMusic 关联，使播放在页面间持续
+        (function(){
+            const btn = document.getElementById('musicToggle');
+            const playIcon = btn.querySelector('.icon.play');
+            const pauseIcon = btn.querySelector('.icon.pause');
+
+            function setUIPlaying(isPlaying){
+                btn.setAttribute('aria-pressed', String(!!isPlaying));
+                if(isPlaying){ playIcon.style.display='none'; pauseIcon.style.display=''; btn.title='暂停背景音乐'; }
+                else { playIcon.style.display=''; pauseIcon.style.display='none'; btn.title='播放背景音乐'; }
+            }
+
+            btn.addEventListener('click', function(e){
+                e.preventDefault();
+                const currentlyWanted = localStorage.getItem('navMusicPlaying') === 'true';
+                if(currentlyWanted){
+                    window.SiteMusic && window.SiteMusic.pause();
+                    localStorage.setItem('navMusicPlaying','false');
+                    setUIPlaying(false);
+                } else {
+                    window.SiteMusic && window.SiteMusic.play();
+                    localStorage.setItem('navMusicPlaying','true');
+                    setUIPlaying(true);
+                }
+            });
+
+            // 接收播放器窗口的事件，用于更新页面 UI
+            window.addEventListener('siteMusicStatus', function(ev){
+                const d = ev.detail || {};
+                if(d.type === 'playerEvent') setUIPlaying(d.event === 'play');
+                if(d.type === 'state') setUIPlaying(!!d.isPlaying);
+            });
+
+            // 初始化 UI
+            setUIPlaying(localStorage.getItem('navMusicPlaying') === 'true');
+        })();
     </script>
 </body>
 </html> 
