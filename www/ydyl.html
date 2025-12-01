@@ -154,6 +154,137 @@
             color: #ecf0f1;
             line-height: 1.6;
         }
+        .tree-timeline {
+            position: relative;
+            padding: 40px 20px;
+            min-height: 600px;
+        }
+        .tree-trunk {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #3498db 0%, #2ecc71 50%, #f39c12 100%);
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+        }
+        .tree-node {
+            position: relative;
+            margin: 30px 0;
+            cursor: pointer;
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        .tree-node:nth-child(odd) { animation-delay: 0.1s; }
+        .tree-node:nth-child(even) { animation-delay: 0.3s; }
+        .tree-node:nth-child(3n) { animation-delay: 0.5s; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tree-node:nth-child(odd) .node-content { margin-left: 55%; }
+        .tree-node:nth-child(even) .node-content { margin-right: 55%; text-align: right; }
+        .tree-branch {
+            position: absolute;
+            top: 50%;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3498db);
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.6);
+            transition: all 0.3s;
+        }
+        .tree-node:nth-child(odd) .tree-branch {
+            left: 50%;
+            transform: translateY(-50%);
+        }
+        .tree-node:nth-child(even) .tree-branch {
+            right: 50%;
+            transform: translateY(-50%) scaleX(-1);
+        }
+        .node-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #3498db, #2980b9);
+            border: 3px solid #0a0e27;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.8), inset 0 0 10px rgba(255,255,255,0.3);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(52, 152, 219, 0.8), inset 0 0 10px rgba(255,255,255,0.3); }
+            50% { box-shadow: 0 0 35px rgba(52, 152, 219, 1), inset 0 0 15px rgba(255,255,255,0.5); transform: translate(-50%, -50%) scale(1.1); }
+        }
+        .node-content {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(26, 95, 180, 0.2), rgba(41, 128, 185, 0.4));
+            border: 2px solid rgba(52, 152, 219, 0.5);
+            border-radius: 12px;
+            padding: 15px 20px;
+            max-width: 40%;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .tree-node:hover .node-content {
+            transform: scale(1.05);
+            border-color: #3498db;
+            box-shadow: 0 10px 40px rgba(52, 152, 219, 0.7);
+            background: linear-gradient(135deg, rgba(26, 95, 180, 0.4), rgba(41, 128, 185, 0.6));
+        }
+        .tree-node:hover .tree-branch {
+            width: 80px;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 1);
+        }
+        .tree-node:hover .node-dot {
+            transform: translate(-50%, -50%) scale(1.3);
+            animation: none;
+        }
+        .node-year {
+            font-size: 22px;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+        }
+        .node-text {
+            font-size: 14px;
+            color: #ecf0f1;
+            line-height: 1.6;
+        }
+        .node-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            margin-top: 10px;
+            padding-top: 0;
+            border-top: 1px solid transparent;
+        }
+        .node-content.expanded .node-detail {
+            max-height: 500px;
+            padding-top: 10px;
+            border-top-color: rgba(52, 152, 219, 0.3);
+        }
+        .node-detail-text {
+            font-size: 13px;
+            color: #95a5a6;
+            line-height: 1.5;
+            font-style: italic;
+        }
+        .expand-icon {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 12px;
+            color: #3498db;
+            transition: transform 0.3s;
+        }
+        .node-content.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
         .source-list {
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 31, 58, 0.9));
             border: 2px solid rgba(52, 152, 219, 0.4);
@@ -321,54 +452,104 @@
         </section>
 
         <section class="section">
-            <h2>发展历程与里程碑</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-year">2014年</div>
-                        <p>贵州开始实施大数据战略行动，明确将大数据作为发展战略</p>
+            <h2>发展历程与里程碑 - 交互式时间线树</h2>
+            <p style="color: #95a5a6; font-size: 13px; margin-bottom: 20px; text-align: center;">💡 点击节点查看详细信息</p>
+            <div class="tree-timeline">
+                <div class="tree-trunk"></div>
+                
+                <div class="tree-node" data-year="2014">
+                    <div class="tree-branch"></div>
+                    <div class="node-dot"></div>
+                    <div class="node-content">
+                        <div class="node-year">2014年 <span class="expand-icon">▼</span></div>
+                        <div class="node-text">贵州开始实施大数据战略行动</div>
+                        <div class="node-detail">
+                            <div class="node-detail-text">明确将大数据作为核心发展战略,开启"云上贵州"建设征程。这一年标志着贵州大数据产业从无到有的历史性起点,为后续发展奠定政策基础。</div>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-year">2015年</div>
-                        <p>首届中国国际大数据产业博览会（数博会）在贵阳举办</p>
+                
+                <div class="tree-node" data-year="2015">
+                    <div class="tree-branch"></div>
+                    <div class="node-dot"></div>
+                    <div class="node-content">
+                        <div class="node-year">2015年 <span class="expand-icon">▼</span></div>
+                        <div class="node-text">首届数博会在贵阳举办</div>
+                        <div class="node-detail">
+                            <div class="node-detail-text">中国国际大数据产业博览会(数博会)永久落户贵阳,成为全球首个大数据主题博览会,每年吸引全球数万名大数据精英汇聚,极大提升了贵州在全球大数据领域的影响力。</div>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-year">2016年</div>
-                        <p>出台全国第一部大数据地方法规《贵州省大数据发展应用促进条例》</p>
+                
+                <div class="tree-node" data-year="2016">
+                    <div class="tree-branch"></div>
+                    <div class="node-dot"></div>
+                    <div class="node-content">
+                        <div class="node-year">2016年 <span class="expand-icon">▼</span></div>
+                        <div class="node-text">全国首部大数据地方法规出台</div>
+                        <div class="node-detail">
+                            <div class="node-detail-text">《贵州省大数据发展应用促进条例》正式实施,这是中国第一部大数据地方性法规,为数据安全、开放共享、产业发展提供法律保障,开创了大数据立法的先河。</div>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-year">2017年</div>
-                        <p>贵阳·贵安国家级互联网骨干直联点建成</p>
+                
+                <div class="tree-node" data-year="2017">
+                    <div class="tree-branch"></div>
+                    <div class="node-dot"></div>
+                    <div class="node-content">
+                        <div class="node-year">2017年 <span class="expand-icon">▼</span></div>
+                        <div class="node-text">国家级互联网骨干直联点建成</div>
+                        <div class="node-detail">
+                            <div class="node-detail-text">贵阳·贵安国家级互联网骨干直联点建成,网络时延降低至5ms以内,大幅提升西南地区互联网性能,为大数据中心集群提供坚实网络基础设施。</div>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-year">2021年</div>
-                        <p>苹果iCloud中国（贵安）数据中心正式投入运营</p>
+                
+                <div class="tree-node" data-year="2021">
+                    <div class="tree-branch"></div>
+                    <div class="node-dot"></div>
+                    <div class="node-content">
+                        <div class="node-year">2021年 <span class="expand-icon">▼</span></div>
+                        <div class="node-text">苹果iCloud数据中心投运</div>
+                        <div class="node-detail">
+                            <div class="node-detail-text">苹果iCloud中国(贵安)数据中心正式投入运营,这是苹果在中国的第一个数据中心,标志着国际科技巨头对贵州大数据产业的高度认可,大幅提升贵州在全球数据中心版图中的地位。</div>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-year">2022年</div>
-                        <p>贵州成为国家"东数西算"工程算力枢纽节点；完成全国首笔数据资产质押融资</p>
+                
+                <div class="tree-node" data-year="2022">
+                    <div class="tree-branch"></div>
+                    <div class="node-dot"></div>
+                    <div class="node-content">
+                        <div class="node-year">2022年 <span class="expand-icon">▼</span></div>
+                        <div class="node-text">"东数西算"工程启动</div>
+                        <div class="node-detail">
+                            <div class="node-detail-text">贵州成为国家"东数西算"工程8大算力枢纽节点之一,贵安新区获批建设超大型数据中心集群。同年完成全国首笔数据资产质押融资4000万元,开启"数据变资产"新模式。</div>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-year">2023年</div>
-                        <p>全省服务器承载能力超过400万台,数据中心规模持续扩大</p>
+                
+                <div class="tree-node" data-year="2023">
+                    <div class="tree-branch"></div>
+                    <div class="node-dot"></div>
+                    <div class="node-content">
+                        <div class="node-year">2023年 <span class="expand-icon">▼</span></div>
+                        <div class="node-text">服务器规模突破400万台</div>
+                        <div class="node-detail">
+                            <div class="node-detail-text">全省服务器承载能力超过400万台,数据中心规模持续扩大,在建及投运的超大型数据中心达49个,PUE值优化至1.2以下,成为全国数据中心密度最高的省份之一。</div>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-year">2025年</div>
-                        <p>颁布3年《贵州省推动人工智能高质量发展行动方案(2025—2027年)》</p>
+                
+                <div class="tree-node" data-year="2025">
+                    <div class="tree-branch"></div>
+                    <div class="node-dot"></div>
+                    <div class="node-content">
+                        <div class="node-year">2025年 <span class="expand-icon">▼</span></div>
+                        <div class="node-text">AI高质量发展行动方案</div>
+                        <div class="node-detail">
+                            <div class="node-detail-text">颁布《贵州省推动人工智能高质量发展行动方案(2025—2027年)》,明确到2027年算力规模达210 Eflops,AI核心产业规模达350亿元,开启大数据向人工智能升级的新征程。</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -403,6 +584,28 @@
     }
     setInterval(updateTime, 1000);
     updateTime();
+    
+    // 时间线树交互
+    document.addEventListener('DOMContentLoaded', function() {
+        const treeNodes = document.querySelectorAll('.tree-node');
+        
+        treeNodes.forEach(node => {
+            const content = node.querySelector('.node-content');
+            content.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                // 关闭其他已展开的节点
+                treeNodes.forEach(otherNode => {
+                    if (otherNode !== node) {
+                        otherNode.querySelector('.node-content').classList.remove('expanded');
+                    }
+                });
+                
+                // 切换当前节点
+                this.classList.toggle('expanded');
+            });
+        });
+    });
     
     // 初始化图表
     document.addEventListener('DOMContentLoaded', function() {
