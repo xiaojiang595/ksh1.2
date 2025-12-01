@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>数据筑梦：智能终端产业培育行动</title>
-    <script src="../js/vendor/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,87 +40,148 @@
         }
         .main-nav .nav-link:hover { background: rgba(255,255,255,0.1); border-bottom-color: #fff; }
         .main-nav .nav-link.active { background: rgba(255,255,255,0.15); border-bottom-color: #fff; font-weight: bold; }
-        .header {
+        .container { max-width: 1920px; margin: 0 auto; padding: 20px; }
+        header {
             text-align: center;
             padding: 30px 0 20px;
             background: linear-gradient(90deg, rgba(26, 95, 180, 0.3), rgba(41, 128, 185, 0.5), rgba(26, 95, 180, 0.3));
             border-bottom: 3px solid #1a5fb4;
             box-shadow: 0 4px 20px rgba(26, 95, 180, 0.5);
+            margin-bottom: 20px;
         }
-        .header h1 {
-            font-size: 48px;
+        header h1 {
+            font-size: 42px;
             margin-bottom: 10px;
             color: #ffffff;
             text-shadow: 0 0 20px rgba(52, 152, 219, 0.8);
-            letter-spacing: 4px;
+            letter-spacing: 3px;
         }
-        .header .subtitle { font-size: 20px; color: #3498db; letter-spacing: 2px; }
-        .container { max-width: 1920px; margin: 0 auto; padding: 20px; }
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        .stat-box {
-            background: linear-gradient(135deg, rgba(26, 95, 180, 0.2), rgba(41, 128, 185, 0.3));
-            border: 2px solid rgba(52, 152, 219, 0.5);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        .stat-box:hover {
-            transform: translateY(-5px);
-            border-color: #3498db;
-            box-shadow: 0 8px 30px rgba(52, 152, 219, 0.6);
-        }
-        .stat-box .label { font-size: 16px; color: #95a5a6; margin-bottom: 10px; }
-        .stat-box .value {
-            font-size: 36px;
-            font-weight: bold;
-            color: #3498db;
-            text-shadow: 0 0 10px rgba(52, 152, 219, 0.8);
-        }
-        .stat-box .unit { font-size: 14px; color: #7f8c8d; margin-top: 5px; }
-        .chart-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        .chart-box {
+        header .subtitle, header p { font-size: 18px; color: #3498db; letter-spacing: 2px; }
+        .intro, .section {
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 31, 58, 0.9));
             border: 2px solid rgba(52, 152, 219, 0.4);
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            line-height: 1.8;
         }
-        .chart-box h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
+        .section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
             color: #3498db;
             border-left: 4px solid #3498db;
             padding-left: 15px;
         }
-        .chart-container { height: 350px; position: relative; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        table th {
-            background: linear-gradient(135deg, rgba(26, 95, 180, 0.5), rgba(41, 128, 185, 0.6));
-            color: #fff;
-            padding: 12px;
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .data-card {
+            background: linear-gradient(135deg, rgba(26, 95, 180, 0.2), rgba(41, 128, 185, 0.3));
+            border: 2px solid rgba(52, 152, 219, 0.5);
+            border-radius: 10px;
+            padding: 15px;
             text-align: center;
-            border: 1px solid rgba(52, 152, 219, 0.3);
+            transition: all 0.3s;
+        }
+        .data-card:hover {
+            transform: translateY(-5px);
+            border-color: #3498db;
+            box-shadow: 0 8px 30px rgba(52, 152, 219, 0.6);
+        }
+        .data-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #3498db;
+            text-shadow: 0 0 10px rgba(52, 152, 219, 0.8);
+        }
+        .data-desc { font-size: 13px; color: #95a5a6; margin-top: 5px; }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab {
+            background: linear-gradient(135deg, rgba(26, 95, 180, 0.3), rgba(41, 128, 185, 0.4));
+            border: 2px solid rgba(52, 152, 219, 0.5);
+            border-radius: 8px;
+            padding: 12px 24px;
+            color: #ecf0f1;
+            cursor: pointer;
+            transition: all 0.3s;
             font-size: 14px;
         }
-        table td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid rgba(52, 152, 219, 0.2);
+        .tab:hover, .tab.active {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.6), rgba(41, 128, 185, 0.7));
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.5);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .chart-container { height: 400px; position: relative; margin: 20px 0; }
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        .timeline-item {
+            display: flex;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .timeline-content {
+            background: linear-gradient(135deg, rgba(26, 95, 180, 0.2), rgba(41, 128, 185, 0.3));
+            border: 2px solid rgba(52, 152, 219, 0.4);
+            border-radius: 10px;
+            padding: 15px;
+            flex: 1;
+            transition: all 0.3s;
+        }
+        .timeline-content:hover {
+            transform: translateX(5px);
+            border-color: #3498db;
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.5);
+        }
+        .timeline-year {
+            font-size: 20px;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 8px;
+        }
+        .timeline-content p {
+            font-size: 14px;
             color: #ecf0f1;
+            line-height: 1.6;
+        }
+        .source-list {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 31, 58, 0.9));
+            border: 2px solid rgba(52, 152, 219, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .source-list h3 {
+            font-size: 20px;
+            color: #3498db;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        .source-list ul { list-style: none; padding: 0; }
+        .source-list li { padding: 8px 0; font-size: 13px; color: #ecf0f1; }
+        .source-list a { color: #3498db; text-decoration: none; }
+        .source-list a:hover { text-decoration: underline; }
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            border-top: 2px solid rgba(52, 152, 219, 0.3);
+            color: #95a5a6;
             font-size: 13px;
         }
-        table tr:hover { background: rgba(52, 152, 219, 0.1); }
     </style>
 </head>
 <body>
@@ -138,190 +199,422 @@
             <li id="datetime" style="padding: 15px 20px; color: #ecf0f1; font-size: 14px;"></li>
         </ul>
     </nav>
-    
-    <div class="header">
-        <h1>数据筑梦：贵州多领域数据资源建设可视化纪实</h1>
-        <div class="subtitle">智能终端产业培育行动 - 智算服务、智能终端与产业承载能力发展 (2008-2023)</div>
-    </div>
-
     <div class="container">
-        <div class="stats-row">
-            <div class="stat-box">
-                <div class="label">服务器承载能力</div>
-                <div class="value">400</div>
-                <div class="unit">万台</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">智能终端产量</div>
-                <div class="value">1.2</div>
-                <div class="unit">亿台/年</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">大数据企业</div>
-                <div class="value">6000+</div>
-                <div class="unit">家</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">数字经济占GDP</div>
-                <div class="value">35</div>
-                <div class="unit">%</div>
-            </div>
+        <header>
+            <h1>数据筑梦：贵州多领域数据资源建设可视化纪实</h1>
+            <p class="subtitle">智能终端产业培育行动 - 智算服务与智能终端发展 (2008-2023)</p>
+        </header>
+
+        <section class="intro">
+            <p style="color: #ffffff;">贵州省作为中国首个国家级大数据综合试验区，自2008年起步探索，2014年全面实施大数据战略以来，在智算服务产业、智能终端产业和产业承载能力建设方面取得了显著成就。本页面通过数据可视化方式展示贵州在这些领域的领先成就和发展轨迹。</p>
+        </section>
+
+        <div class="tabs">
+            <button class="tab active" onclick="openTab('tab1')">智算服务产业</button>
+            <button class="tab" onclick="openTab('tab2')">智能终端产业</button>
+            <button class="tab" onclick="openTab('tab3')">产业承载能力</button>
+            <button class="tab" onclick="openTab('tab4')">发展历程</button>
         </div>
 
-        <div class="chart-grid">
-            <div class="chart-box">
-                <h3>服务器数量增长趋势</h3>
-                <div class="chart-container"><canvas id="chart1"></canvas></div>
+        <section id="tab1" class="tab-content active">
+            <div class="section">
+                <h2>智算服务产业发展成就</h2>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="data-value">400万台</div>
+                        <div class="data-desc">服务器承载能力 (2023年)</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">18个</div>
+                        <div class="data-desc">超大型数据中心数量 (2023年)</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">40+个</div>
+                        <div class="data-desc">重点数据中心数量 (2023年)</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">全国8个之一</div>
+                        <div class="data-desc">国家"东数西算"工程算力枢纽节点</div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="computingChart"></canvas>
+                </div>
             </div>
-            <div class="chart-box">
-                <h3>智能终端年产量增长</h3>
-                <div class="chart-container"><canvas id="chart2"></canvas></div>
-            </div>
-            <div class="chart-box">
-                <h3>数字经济占GDP比重</h3>
-                <div class="chart-container"><canvas id="chart3"></canvas></div>
-            </div>
-            <div class="chart-box">
-                <h3>大数据企业数量增长</h3>
-                <div class="chart-container"><canvas id="chart4"></canvas></div>
-            </div>
-        </div>
+        </section>
 
-        <div class="chart-box">
-            <h3>重点数据中心列表</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>数据中心名称</th>
-                        <th>位置</th>
-                        <th>服务器规模</th>
-                        <th>核心特点</th>
-                        <th>状态</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>华为云贵安数据中心</td>
-                        <td>贵安新区</td>
-                        <td>100万台</td>
-                        <td>全球最大</td>
-                        <td>运营中</td>
-                    </tr>
-                    <tr>
-                        <td>苹果iCloud数据中心</td>
-                        <td>贵安新区</td>
-                        <td>80万台</td>
-                        <td>iCloud中国业务</td>
-                        <td>运营中</td>
-                    </tr>
-                    <tr>
-                        <td>腾讯七星数据中心</td>
-                        <td>贵安新区</td>
-                        <td>50万台</td>
-                        <td>山洞数据中心</td>
-                        <td>运营中</td>
-                    </tr>
-                    <tr>
-                        <td>中国移动数据中心</td>
-                        <td>贵阳市</td>
-                        <td>30万台</td>
-                        <td>通信业务支撑</td>
-                        <td>在建</td>
-                    </tr>
-                    <tr>
-                        <td>中国电信云数据中心</td>
-                        <td>贵阳市</td>
-                        <td>25万台</td>
-                        <td>电信级云服务</td>
-                        <td>运营中</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <section id="tab2" class="tab-content">
+            <div class="section">
+                <h2>智能终端产业发展成就</h2>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="data-value">1.2亿台</div>
+                        <div class="data-desc">智能终端年产量 (2023年)</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">3500亿元</div>
+                        <div class="data-desc">智能终端产业产值 (2023年)</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">120+家</div>
+                        <div class="data-desc">规模以上智能终端制造企业 (2023年)</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">25%</div>
+                        <div class="data-desc">年均增长率 (2018-2023)</div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="terminalChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab3" class="tab-content">
+            <div class="section">
+                <h2>产业承载能力提升</h2>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <div class="data-value">85%</div>
+                        <div class="data-desc">数字经济发展指数增长 (2015-2023)</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">6000+家</div>
+                        <div class="data-desc">大数据相关企业数量 (2023年)</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">280万人</div>
+                        <div class="data-desc">大数据产业从业人员 (2023年)</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">35%</div>
+                        <div class="data-desc">数字经济占GDP比重 (2023年)</div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="capacityChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab4" class="tab-content">
+            <div class="section">
+                <h2>发展历程与里程碑</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2008年</div>
+                            <p>贵州开始探索数据中心建设，启动首个大型数据中心项目</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2014年</div>
+                            <p>贵州实施大数据战略行动，明确将大数据作为区域发展战略</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2015年</div>
+                            <p>首届中国国际大数据产业博览会（数博会）在贵阳举办</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2016年</div>
+                            <p>获批建设全国首个国家级大数据综合试验区</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2017年</div>
+                            <p>贵阳·贵安国家级互联网骨干直联点建成</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2019年</div>
+                            <p>苹果iCloud中国（贵安）数据中心主体完工</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2021年</div>
+                            <p>华为全球最大云数据中心一期在贵安投入使用</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2022年</div>
+                            <p>贵州成为国家"东数西算"工程全国八大算力枢纽节点之一</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2023年</div>
+                            <p>全省服务器承载能力突破400万台，数字经济占GDP比重达35%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="source-list">
+            <h3>数据来源参考</h3>
+            <ul>
+                <li>贵州省人民政府官网：<a href="http://www.guizhou.gov.cn/" target="_blank">http://www.guizhou.gov.cn/</a></li>
+                <li>贵州省大数据发展管理局：<a href="http://dsj.guizhou.gov.cn/" target="_blank">http://dsj.guizhou.gov.cn/</a></li>
+                <li>贵州省统计局：<a href="http://stats.guizhou.gov.cn/" target="_blank">http://stats.guizhou.gov.cn/</a></li>
+                <li>国家工业和信息化部：<a href="https://www.miit.gov.cn/" target="_blank">https://www.miit.gov.cn/</a></li>
+                <li>中国信息通信研究院：<a href="http://www.caict.ac.cn/" target="_blank">http://www.caict.ac.cn/</a></li>
+                <li>中国国际大数据产业博览会：<a href="https://www.bigdata-expo.cn/" target="_blank">https://www.bigdata-expo.cn/</a></li>
+                <li>《贵州省数字经济发展报告》(2015-2023各年度)</li>
+                <li>《中国大数据产业发展指数》研究报告</li>
+            </ul>
+            <p style="margin-top: 15px; font-style: italic; color: #666;">注：部分数据为基于公开报道和行业报告的估算值，实际数据以官方发布为准。</p>
+        </section>
+
+        <footer>
+            <p>数据更新时间：2023年 | 本页面仅用于信息展示与数据分析目的</p>
+        </footer>
     </div>
 
     <script>
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('datetime').textContent = 
-                now.toLocaleDateString('zh-CN', {year:'numeric',month:'2-digit',day:'2-digit'}) + ' ' +
-                now.toLocaleTimeString('zh-CN', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
-
-        const commonOpts = {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { labels: { color: '#ecf0f1', font: { size: 12 } } },
-                datalabels: { display: false }
-            },
-            scales: {
-                x: { ticks: { color: '#95a5a6' }, grid: { color: 'rgba(52,152,219,0.1)' } },
-                y: { ticks: { color: '#95a5a6' }, grid: { color: 'rgba(52,152,219,0.1)' } }
+        // 选项卡切换功能
+        function openTab(tabId) {
+            // 隐藏所有选项卡内容
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
             }
-        };
+            
+            // 移除所有选项卡的活动状态
+            const tabs = document.getElementsByClassName('tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            // 显示当前选项卡内容并设置活动状态
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
 
-        new Chart(document.getElementById('chart1'), {
-            type: 'line',
-            data: {
-                labels: ['2008', '2010', '2012', '2014', '2016', '2018', '2020', '2022', '2023'],
-                datasets: [{
-                    label: '服务器数量(万台)',
-                    data: [0.5, 2, 5, 15, 50, 120, 220, 350, 400],
-                    borderColor: 'rgba(52,152,219,0.8)',
-                    backgroundColor: 'rgba(52,152,219,0.2)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: commonOpts
-        });
+        // 初始化图表
+        document.addEventListener('DOMContentLoaded', function() {
+            // 智算服务产业发展图表
+            const computingCtx = document.getElementById('computingChart').getContext('2d');
+            const computingChart = new Chart(computingCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2008', '2010', '2012', '2014', '2016', '2018', '2020', '2022', '2023'],
+                    datasets: [{
+                        label: '服务器数量(万台)',
+                        data: [0.5, 2, 5, 15, 50, 120, 220, 350, 400],
+                        borderColor: '#1a6dfc',
+                        backgroundColor: 'rgba(26, 109, 252, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '贵州服务器数量增长趋势 (2008-2023)',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '服务器数量(万台)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '年份'
+                            }
+                        }
+                    }
+                }
+            });
 
-        new Chart(document.getElementById('chart2'), {
-            type: 'bar',
-            data: {
-                labels: ['2010', '2012', '2014', '2016', '2018', '2020', '2022', '2023'],
-                datasets: [{
-                    label: '智能终端产量(百万台)',
-                    data: [2, 8, 25, 45, 65, 85, 105, 120],
-                    backgroundColor: 'rgba(46,204,113,0.8)'
-                }]
-            },
-            options: commonOpts
-        });
+            // 智能终端产业发展图表
+            const terminalCtx = document.getElementById('terminalChart').getContext('2d');
+            const terminalChart = new Chart(terminalCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['2010', '2012', '2014', '2016', '2018', '2020', '2022', '2023'],
+                    datasets: [{
+                        label: '智能终端产量(百万台)',
+                        data: [2, 8, 25, 45, 65, 85, 105, 120],
+                        backgroundColor: 'rgba(26, 109, 252, 0.7)',
+                        borderColor: '#1a6dfc',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '贵州智能终端年产量增长 (2010-2023)',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '产量(百万台)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '年份'
+                            }
+                        }
+                    }
+                }
+            });
 
-        new Chart(document.getElementById('chart3'), {
-            type: 'line',
-            data: {
-                labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
-                datasets: [{
-                    label: '数字经济占GDP比重(%)',
-                    data: [20, 23, 26, 28, 30, 31, 32, 34, 35],
-                    borderColor: 'rgba(155,89,182,0.8)',
-                    backgroundColor: 'rgba(155,89,182,0.2)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: commonOpts
+            // 产业承载能力图表
+            const capacityCtx = document.getElementById('capacityChart').getContext('2d');
+            const capacityChart = new Chart(capacityCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                    datasets: [
+                        {
+                            label: '数字经济占GDP比重(%)',
+                            data: [20, 23, 26, 28, 30, 31, 32, 34, 35],
+                            borderColor: '#1a6dfc',
+                            backgroundColor: 'rgba(26, 109, 252, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            yAxisID: 'y',
+                            tension: 0.4
+                        },
+                        {
+                            label: '大数据企业数量(千家)',
+                            data: [1, 1.8, 2.5, 3.2, 4, 4.8, 5.3, 5.7, 6],
+                            borderColor: '#ff6b6b',
+                            backgroundColor: 'rgba(255, 107, 107, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            yAxisID: 'y1',
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '数字经济占比与企业数量增长 (2015-2023)',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: '数字经济占GDP比重(%)'
+                            },
+                            min: 0,
+                            max: 40
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: '大数据企业数量(千家)'
+                            },
+                            min: 0,
+                            max: 7,
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '年份'
+                            }
+                        }
+                    }
+                }
+            });
         });
-
-        new Chart(document.getElementById('chart4'), {
-            type: 'bar',
-            data: {
-                labels: ['2015', '2017', '2019', '2021', '2023'],
-                datasets: [{
-                    label: '大数据企业数量(千家)',
-                    data: [1, 2.5, 4, 5.3, 6],
-                    backgroundColor: 'rgba(230,126,34,0.8)'
-                }]
-            },
-            options: commonOpts
+    </script>
+    
+    <script>
+        // Tab切换功能
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = 'none';
+            }
+            const tablinks = document.getElementsByClassName('tab-link');
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(' active', '');
+            }
+            document.getElementById(tabName).style.display = 'block';
+            evt.currentTarget.className += ' active';
+        }
+        
+        // 默认显示第一个tab
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstTab = document.querySelector('.tab-link');
+            if (firstTab) firstTab.click();
         });
+    
+    // 更新时间显示
+    function updateTime() {
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('zh-CN', {year:'numeric',month:'2-digit',day:'2-digit'});
+        const timeStr = now.toLocaleTimeString('zh-CN', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+        document.getElementById('datetime').textContent = dateStr + ' ' + timeStr;
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
     </script>
 </body>
 </html>

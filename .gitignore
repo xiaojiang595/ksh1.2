@@ -1,0 +1,23 @@
+# 编辑器和IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 临时文件
+*.tmp
+*.bak
+*.log
+
+# Node modules (如果将来添加)
+node_modules/
+
+# 备份文件
+*_backup/
+*.backup
