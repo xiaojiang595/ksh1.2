@@ -383,8 +383,50 @@
         </div>
     </nav>
     <div class="header">
-        <h1>数据筑梦：贵州多领域数据资源建设可视化纪实</h1>
+        <h1>数据筑梦:贵州多领域数据资源建设可视化纪实</h1>
         <div class="subtitle">2025-2027年行动方案实施监测</div>
+    </div>
+
+    <!-- AI行动方案总体概况 -->
+    <div class="container" style="margin-bottom: 30px;">
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="label">AI行动方案实施年限</div>
+                <div class="value">3</div>
+                <div class="unit">年 (2025-2027)</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">算力规模增长</div>
+                <div class="value">150→210</div>
+                <div class="unit">Eflops</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">AI产业规模增长</div>
+                <div class="value">240→350</div>
+                <div class="unit">亿元</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">应用场景增长</div>
+                <div class="value">100→500</div>
+                <div class="unit">个</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">高质量数据集</div>
+                <div class="value">10→50</div>
+                <div class="unit">个</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-box">
+                <h3>贵州省AI行动方案五大行动</h3>
+                <div class="chart-container"><canvas id="aiActionsChart"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h3>AI行动方案三年核心指标增长趋势</h3>
+                <div class="chart-container"><canvas id="aiGrowthChart"></canvas></div>
+            </div>
+        </div>
     </div>
 
     <div class="container">
@@ -514,10 +556,19 @@
 
         window.addEventListener('load', () => {
             const boxes = document.querySelectorAll('.stat-box .value');
-            const values = [210, 85, 50, 500, 48];
+            // AI概览: 3, 150→210, 240→350, 100→500, 10→50
+            // 原指标: 210, 15.8, 500, 1.2, 35
             boxes.forEach((box, i) => {
+                const text = box.textContent;
+                // 如果包含箭头,不做动画处理
+                if (text.includes('→')) {
+                    return;
+                }
                 box.textContent = '0';
-                setTimeout(() => animateValue(box, 0, values[i], 2000), 500 + i * 200);
+                const value = parseFloat(text);
+                if (!isNaN(value)) {
+                    setTimeout(() => animateValue(box, 0, value, 2000), 500 + i * 200);
+                }
             });
         });
 
@@ -545,6 +596,163 @@
                 y: { ticks: { color: '#95a5a6' }, grid: { color: 'rgba(52,152,219,0.1)' } }
             }
         };
+
+        // AI行动方案图表1: 五大行动雷达图
+        const aiActionsChart = new Chart(document.getElementById('aiActionsChart'), {
+            type: 'radar',
+            data: {
+                labels: ['智算能力提升', '数据资源建设', '行业大模型发展', '智能产业培育', '数字生态优化'],
+                datasets: [
+                    {
+                        label: '2025年目标完成度',
+                        data: [75, 65, 55, 60, 70],
+                        backgroundColor: 'rgba(52,152,219,0.3)',
+                        borderColor: colors.blue,
+                        borderWidth: 2,
+                        pointBackgroundColor: colors.blue,
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: colors.blue
+                    },
+                    {
+                        label: '2027年目标',
+                        data: [95, 90, 85, 88, 92],
+                        backgroundColor: 'rgba(46,204,113,0.3)',
+                        borderColor: colors.green,
+                        borderWidth: 2,
+                        pointBackgroundColor: colors.green,
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: colors.green
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: { duration: 2000, easing: 'easeInOutQuart' },
+                plugins: {
+                    legend: { 
+                        labels: { 
+                            color: '#ecf0f1', 
+                            font: { size: 12 } 
+                        } 
+                    }
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: { 
+                            color: '#95a5a6',
+                            backdropColor: 'transparent'
+                        },
+                        grid: { 
+                            color: 'rgba(52,152,219,0.2)' 
+                        },
+                        pointLabels: {
+                            color: '#ecf0f1',
+                            font: { size: 11 }
+                        }
+                    }
+                }
+            }
+        });
+
+        // AI行动方案图表2: 三年核心指标增长
+        const aiGrowthChart = new Chart(document.getElementById('aiGrowthChart'), {
+            type: 'line',
+            data: {
+                labels: ['2025', '2026', '2027'],
+                datasets: [
+                    {
+                        label: '算力规模(Eflops)',
+                        data: [150, 180, 210],
+                        borderColor: colors.blue,
+                        backgroundColor: 'rgba(52,152,219,0.2)',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.4,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'AI产业规模(亿元)',
+                        data: [240, 290, 350],
+                        borderColor: colors.green,
+                        backgroundColor: 'rgba(46,204,113,0.2)',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.4,
+                        yAxisID: 'y1'
+                    },
+                    {
+                        label: '应用场景数量(个)',
+                        data: [100, 200, 500],
+                        borderColor: colors.purple,
+                        backgroundColor: 'rgba(155,89,182,0.2)',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.4,
+                        yAxisID: 'y2'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: { duration: 2000, easing: 'easeInOutQuart' },
+                plugins: {
+                    legend: { 
+                        labels: { 
+                            color: '#ecf0f1', 
+                            font: { size: 12 } 
+                        } 
+                    },
+                    datalabels: {
+                        color: '#3498db',
+                        font: { size: 11, weight: 'bold' },
+                        formatter: (v) => Math.round(v)
+                    }
+                },
+                scales: {
+                    x: { 
+                        ticks: { color: '#95a5a6' }, 
+                        grid: { color: 'rgba(52,152,219,0.1)' } 
+                    },
+                    y: { 
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        ticks: { color: '#95a5a6' }, 
+                        grid: { color: 'rgba(52,152,219,0.1)' },
+                        title: {
+                            display: true,
+                            text: '算力(Eflops)',
+                            color: '#ecf0f1'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        ticks: { color: '#95a5a6' },
+                        grid: { drawOnChartArea: false },
+                        title: {
+                            display: true,
+                            text: '产业规模(亿元)',
+                            color: '#ecf0f1'
+                        }
+                    },
+                    y2: {
+                        type: 'linear',
+                        display: false,
+                        position: 'right',
+                        ticks: { color: '#95a5a6' },
+                        grid: { drawOnChartArea: false }
+                    }
+                }
+            }
+        });
 
         // 图表1: 算力规模
         const c1 = new Chart(document.getElementById('chart1'), {
