@@ -387,48 +387,7 @@
         <div class="subtitle">2025-2027年行动方案实施监测</div>
     </div>
 
-    <!-- AI行动方案总体概况 -->
-    <div class="container" style="margin-bottom: 30px;">
-        <div class="stats-row">
-            <div class="stat-box">
-                <div class="label">AI行动方案实施年限</div>
-                <div class="value">3</div>
-                <div class="unit">年 (2025-2027)</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">算力规模增长</div>
-                <div class="value">150→210</div>
-                <div class="unit">Eflops</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">AI产业规模增长</div>
-                <div class="value">240→350</div>
-                <div class="unit">亿元</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">应用场景增长</div>
-                <div class="value">100→500</div>
-                <div class="unit">个</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">高质量数据集</div>
-                <div class="value">10→50</div>
-                <div class="unit">个</div>
-            </div>
-        </div>
-
-        <div class="chart-grid">
-            <div class="chart-box">
-                <h3>贵州省AI行动方案五大行动</h3>
-                <div class="chart-container"><canvas id="aiActionsChart"></canvas></div>
-            </div>
-            <div class="chart-box">
-                <h3>AI行动方案三年核心指标增长趋势</h3>
-                <div class="chart-container"><canvas id="aiGrowthChart"></canvas></div>
-            </div>
-        </div>
-    </div>
-
+    <!-- AI行动方案总体概况 (下方内容已上移) -->
     <div class="container">
         <div class="stats-row">
             <div class="stat-box">
@@ -524,6 +483,47 @@
             <div class="chart-box">
                 <h3>五、数字生态优化行动 - 数据交易市场增长</h3>
                 <div class="chart-container tall"><canvas id="chart8"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-bottom: 30px;">
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="label">AI行动方案实施年限</div>
+                <div class="value">3</div>
+                <div class="unit">年 (2025-2027)</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">算力规模增长</div>
+                <div class="value">150→210</div>
+                <div class="unit">Eflops</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">AI产业规模增长</div>
+                <div class="value">240→350</div>
+                <div class="unit">亿元</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">应用场景增长</div>
+                <div class="value">100→500</div>
+                <div class="unit">个</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">高质量数据集</div>
+                <div class="value">10→50</div>
+                <div class="unit">个</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-box">
+                <h3>贵州省AI行动方案五大行动</h3>
+                <div class="chart-container"><canvas id="aiActionsChart"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h3>AI行动方案三年核心指标增长趋势</h3>
+                <div class="chart-container"><canvas id="aiGrowthChart"></canvas></div>
             </div>
         </div>
     </div>
@@ -659,6 +659,33 @@
             }
         });
 
+        // 插件：为单个图表提供从下往上揭示（轻量，安全）
+        (function registerSimpleReveal() {
+            const revealFromBottom = {
+                id: 'revealFromBottom',
+                beforeDatasetsDraw(chart) {
+                    const p = chart.revealProgress ?? 1;
+                    if (p >= 1) return;
+                    const ctx = chart.ctx;
+                    const { left, right, top, bottom } = chart.chartArea || {};
+                    if (left == null) return;
+                    const h = bottom - top;
+                    const clipTop = bottom - h * p;
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.rect(left, clipTop, right - left, bottom - clipTop);
+                    ctx.clip();
+                },
+                afterDatasetsDraw(chart) {
+                    const p = chart.revealProgress ?? 1;
+                    if (p < 1) {
+                        try { chart.ctx.restore(); } catch (e) {}
+                    }
+                }
+            };
+            Chart.register(revealFromBottom);
+        })();
+
         // AI行动方案图表2: 三年核心指标增长
         const aiGrowthChart = new Chart(document.getElementById('aiGrowthChart'), {
             type: 'line',
@@ -753,6 +780,20 @@
                 }
             }
         });
+        // 添加单独的重复上升动画：慢速揭示（周期 6000ms），仅作用于 aiGrowthChart
+        (function revealAiGrowth() {
+            try {
+                aiGrowthChart.revealProgress = 0;
+                const duration = 6000; // ms per cycle
+                const step = 50; // ms
+                const delta = step / duration;
+                setInterval(() => {
+                    aiGrowthChart.revealProgress = (aiGrowthChart.revealProgress ?? 0) + delta;
+                    if (aiGrowthChart.revealProgress >= 1) aiGrowthChart.revealProgress = 0;
+                    aiGrowthChart.draw();
+                }, step);
+            } catch (e) { /* 如果 chart 未准备好就跳过 */ }
+        })();
 
         // 图表1: 算力规模
         const c1 = new Chart(document.getElementById('chart1'), {
@@ -803,7 +844,7 @@
         const c3 = new Chart(document.getElementById('chart3'), {
             type: 'bar',
             data: {
-                labels: ['2015', '2017', '2019', '2021', '2023'],
+                labels: ['2019', '2021', '2023', '2025', '2027'],
                 datasets: [{
                     label: '数据资源总量(亿条)',
                     data: [1.2, 4.1, 7.3, 11.5, 15.8],
@@ -900,6 +941,28 @@
             });
             c6.update('none');
         }, 50);
+
+        // 为指定图表（c1, c2, c6）添加从下往上重复揭示动画（6s/次）
+        (function revealSelectedCharts() {
+            const charts = [];
+            if (typeof c1 !== 'undefined') charts.push(c1);
+            if (typeof c2 !== 'undefined') charts.push(c2);
+            if (typeof c6 !== 'undefined') charts.push(c6);
+            if (!charts.length) return;
+            charts.forEach(ch => ch.revealProgress = 0);
+            const duration = 6000;
+            const step = 50;
+            const delta = step / duration;
+            setInterval(() => {
+                charts.forEach(ch => {
+                    try {
+                        ch.revealProgress = (ch.revealProgress ?? 0) + delta;
+                        if (ch.revealProgress >= 1) ch.revealProgress = 0;
+                        ch.draw();
+                    } catch (e) {}
+                });
+            }, step);
+        })();
 
         // 图表7: 数字经济综合指标
         const c7 = new Chart(document.getElementById('chart7'), {
